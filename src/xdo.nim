@@ -118,6 +118,18 @@ proc xdo_close_all_but_focused_window*(): tuple =
   ## Close all other windows but leave the current focused window open.
   execCmdEx("xdo close -dr")
 
+proc xdo_raise_all_but_focused_window*(): tuple =
+  ## Raise up all other windows but the current focused window.
+  execCmdEx("xdo raise -dr")
+
+proc xdo_lower_all_but_focused_window*(): tuple =
+  ## Lower down all other windows but the current focused window.
+  execCmdEx("xdo lower -dr")
+
+proc xdo_show_all_but_focused_window*(): tuple =
+  ## Show all other windows but the current focused window.
+  execCmdEx("xdo show -dr")
+
 proc xdo_move_mouse_top_left*(): tuple =
   ## Move mouse to Top Left limits (X=0, Y=0).
   execCmdEx("xdo pointer_motion -x 0 -y 0")
