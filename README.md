@@ -31,5 +31,6 @@ xdo_move_mouse_top_100px(repetitions = 5)
 xdo_mouse_move_alternating((x: 99, y: 75), repetitions = 9)
 ```
 
-- Pull Requests are very welcome!.
+- **Pull Requests are very welcome!.**
 - Run `nim doc xdo.nim` for more documentation.
+- Run the module itself for an Example.
