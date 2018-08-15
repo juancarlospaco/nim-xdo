@@ -130,7 +130,7 @@ proc xdo_move_mouse_top_100px*(repetitions: int8): tuple =
   ## Move mouse to Top Y=0, then repeat move Bottom on jumps of 100px each.
   execCmdEx("xdo pointer_motion -y 0")
   for i in 0..repetitions:
-    execCmdEx("xdo pointer_motion -y +100")
+    result = execCmdEx("xdo pointer_motion -y +100")
 
 proc xdo_move_mouse_left_100px*(repetitions: int8): tuple =
   ## Move mouse to Left X=0, then repeat move Right on jumps of 100px each.
@@ -152,7 +152,7 @@ proc xdo_mouse_move_alternating*(move: tuple[x: int, y: int], repetitions: int8)
   for i in 0..repetitions:
     xx = if i mod 2 == 0: "+" else: "-" & $move.x
     yy = if i mod 2 == 0: "+" else: "-" & $move.y
-    execCmdEx(fmt"xdo pointer_motion -x {xx} -y {yy}")
+    result = execCmdEx(fmt"xdo pointer_motion -x {xx} -y {yy}")
 
 
 discard """
