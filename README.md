@@ -22,6 +22,7 @@ import xdo
 xdo_get_id()
 xdo_get_pid()
 xdo_move_mouse((x: "1000", y: "500"))
+xdo_move_mouse((x: "+50", y: "-75"))
 xdo_move_window((x: "500", y: "1000"))
 xdo_resize_window((x: "1024", y: "768"))
 xdo_close_focused_window()
