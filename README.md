@@ -41,6 +41,8 @@ xdo_lower_all_but_focused_window() # Lower down all other windows but the curren
 xdo_show_all_but_focused_window()  # Show all other windows but the current focused window.
 ```
 
+Theres 2 JSON `keycode2char` and `char2keycode` to convert KeyCodes integers to/from Characters strings (human readable keyboard keys).
+
 - **Pull Requests are very welcome!.**
 - Run `nim doc xdo.nim` for more documentation.
 - Run the module itself for an Example.
