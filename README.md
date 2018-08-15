@@ -1,6 +1,6 @@
 # nim-xdo
 
-Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control from Nim code.
+Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control from Nim code, procs for common actions.
 
 ![]()
 
@@ -16,7 +16,7 @@ Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control 
 
 # Use
 
-```
+```nim
 import xdo
 # TDB
 ```
