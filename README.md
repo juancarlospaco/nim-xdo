@@ -2,8 +2,6 @@
 
 Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control from Nim code, procs for common actions.
 
-![xdo]()
-
 
 # install
 
