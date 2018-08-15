@@ -197,5 +197,8 @@ proc xdo_type_datetime*(): tuple =
 
 when is_main_module:
   echo version
-  echo xdo(Actions.pid)
+  echo xdo_get_id()
+  echo xdo_get_pid()
+  echo xdo_move_mouse_random()
+  echo xdo_move_mouse_top_left()
   echo xdo_move_mouse((x: "+9", y: "-9"))
