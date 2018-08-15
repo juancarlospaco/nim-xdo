@@ -39,6 +39,7 @@ xdo_activate_this_window(pid: 666) # Force to Activate this window by PID.
 xdo_raise_all_but_focused_window() # Raise up all other windows but the current focused window.
 xdo_lower_all_but_focused_window() # Lower down all other windows but the current focused window.
 xdo_show_all_but_focused_window()  # Show all other windows but the current focused window.
+# xdo() is also available as a very low level wrapper for XDo for advanced developers.
 ```
 
 Theres 2 JSON `keycode2char` and `char2keycode` to convert KeyCodes integers to/from Characters strings (human readable keyboard keys).
