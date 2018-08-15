@@ -110,6 +110,10 @@ proc xdo_lower_focused_window*(): tuple =
   ## Lower down the current focused window.
   execCmdEx("xdo lower -c")
 
+proc xdo_activate_this_window*(pid: int): tuple =
+  ## Force to Activate this window by PID.
+  execCmdEx(fmt"xdo activate -p {pid}")
+
 proc xdo_hide_all_but_focused_window*(): tuple =
   ## Hide all other windows but leave the current focused window visible.
   execCmdEx("xdo hide -dr")
