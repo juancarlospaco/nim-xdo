@@ -10,7 +10,7 @@ Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control 
 
 # Requirements
 
-- [XDo](https://github.com/baskerville/xdo#xdo1)
+- [XDo](https://github.com/baskerville/xdo#xdo1 "Tiny pure C lib")
 
 
 # Use
