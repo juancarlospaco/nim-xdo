@@ -30,6 +30,10 @@ xdo_move_mouse_top_left()                # Move Mouse to 0,0 Coordinates.
 xdo_move_mouse_random(repetitions = 3)   # Move Mouse randomly, repeat 3 times.
 xdo_move_mouse_top_100px(repetitions = 5) # Move mouse to Y=0 then move on jumps of 100px.
 xdo_mouse_move_alternating((x: 99, y: 75), repetitions = 9) # Move Mouse on ZigZag, repeat 9 times.
+xdo_hide_focused_window()  # Hide the current focused window. This is NOT Minimize.
+xdo_show_focused_window()  # Hide the current focused window. This is NOT Maximize.
+xdo_raise_focused_window() # Raise up the current focused window.
+xdo_lower_focused_window() # Lower down the current focused window.
 ```
 
 - **Pull Requests are very welcome!.**
