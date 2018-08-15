@@ -95,8 +95,20 @@ proc xdo_close_focused_window*(): tuple =
   execCmdEx("xdo close -c")
 
 proc xdo_hide_focused_window*(): tuple =
-  ## Hide the current focused window.
+  ## Hide the current focused window. This is NOT Minimize.
   execCmdEx("xdo hide -c")
+
+proc xdo_show_focused_window*(): tuple =
+  ## Hide the current focused window. This is NOT Maximize.
+  execCmdEx("xdo show -c")
+
+proc xdo_raise_focused_window*(): tuple =
+  ## Raise up the current focused window.
+  execCmdEx("xdo raise -c")
+
+proc xdo_lower_focused_window*(): tuple =
+  ## Lower down the current focused window.
+  execCmdEx("xdo lower -c")
 
 proc xdo_hide_all_but_focused_window*(): tuple =
   ## Hide all other windows but leave the current focused window visible.
