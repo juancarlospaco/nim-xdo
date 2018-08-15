@@ -158,42 +158,41 @@ proc xdo_mouse_move_alternating*(move: tuple[x: int, y: int], repetitions: int8)
 discard """
 proc xdo_mouse_left_click*(): tuple =
   ## Mouse Left Click, 1 repetitions.
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
+  execCmdEx(fmt"")
 
 proc xdo_mouse_right_click*(): tuple =
   ## Mouse Right Click, 1 repetitions.
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
+  execCmdEx(fmt"")
 
 proc xdo_mouse_double_left_click*(): tuple =
   ## Mouse Left Click, 2 repetitions (Double Click).
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
+  execCmdEx(fmt"")
 
 proc xdo_mouse_triple_left_click*(): tuple =
   ## Mouse Left Click, 3 repetitions (Triple Click).
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
+  execCmdEx(fmt"")
 
 pproc xdo_mouse_double_left_click*(): tuple =
   ## Mouse Left Click, 2 repetitions (Double Click).
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")roc xdo_type_double_left_click*(): tuple =
-  ## Mouse Left Click, 2 repetitions (Double Click).
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
+  execCmdEx(fmt"")
 
 proc xdo_type*(words: string, repetitions = 0): tuple =
   ## Type words using keyboard keys.
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
+  execCmdEx(fmt"")
 
 proc xdo_type_temp_dir*(): tuple =
   ## Type the system temporary directory full path using keyboard keys.
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
+  execCmdEx(fmt"")
 
 proc xdo_type_current_dir*(): tuple =
   ## Type the current working directory full path using keyboard keys.
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
+  execCmdEx(fmt"")
 
 proc xdo_type_datetime*(): tuple =
   ## Type the current Date & Time (ISO-Format) using keyboard keys.
-  execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
+  execCmdEx(fmt"")
 """
+
 
 when is_main_module:
   echo version
