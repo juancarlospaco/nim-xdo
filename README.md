@@ -35,3 +35,4 @@ xdo_mouse_move_alternating((x: 99, y: 75), repetitions = 9) # Move Mouse on ZigZ
 - **Pull Requests are very welcome!.**
 - Run `nim doc xdo.nim` for more documentation.
 - Run the module itself for an Example.
+- [Nim GUI Automation on Windows OS.](https://nimble.directory/pkg/autome)
