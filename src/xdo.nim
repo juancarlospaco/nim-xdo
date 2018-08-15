@@ -140,7 +140,7 @@ proc xdo_move_mouse_left_100px*(repetitions: int8): tuple =
 
 proc xdo_get_pid*(): string =
   ## Get PID of a window, integer type.
-  parseHexStr(execCmdEx("xdo pid").output.strip)
+  execCmdEx("xdo pid").output.strip
 
 proc xdo_get_id*(): string =
   ## Get ID of a window, integer type.
@@ -204,5 +204,6 @@ when is_main_module and defined(linux):
   echo xdo_move_mouse_left_100px(2)
   echo xdo_move_mouse_terminal_size()
   echo xdo_move_mouse_top_100px(2)
+  echo xdo_mouse_move_alternating((x: 9, y: 5), 3)
   # echo xdo_hide_all_but_focused_window()
   # echo xdo_hide_focused_window()
