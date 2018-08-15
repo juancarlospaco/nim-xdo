@@ -1,6 +1,6 @@
 import osproc, strformat, strutils, terminal, random, json
 
-const version* = staticExec("xdo -v")  ## XDo Version (SemVer).
+const xdo_version* = staticExec("xdo -v")  ## XDo Version (SemVer).
 
 let
   keycode2char* = %* {
@@ -223,7 +223,7 @@ proc xdo_type_datetime*(): tuple =
 
 
 when is_main_module and defined(linux):
-  echo version
+  echo xdo_version
   echo xdo_get_id()
   echo xdo_get_pid()
   echo xdo_move_mouse_random()
