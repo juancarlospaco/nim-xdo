@@ -128,15 +128,15 @@ proc xdo_move_mouse_terminal_size*(): tuple =
 
 proc xdo_move_mouse_top_100px*(repetitions: int8): tuple =
   ## Move mouse to Top Y=0, then repeat move Bottom on jumps of 100px each.
-  execCmdEx("xdo pointer_motion -y 0")
+  result = execCmdEx("xdo pointer_motion -y 0")
   for i in 0..repetitions:
     result = execCmdEx("xdo pointer_motion -y +100")
 
 proc xdo_move_mouse_left_100px*(repetitions: int8): tuple =
   ## Move mouse to Left X=0, then repeat move Right on jumps of 100px each.
-  execCmdEx("xdo pointer_motion -x 0")
+  result = execCmdEx("xdo pointer_motion -x 0")
   for i in 0..repetitions:
-    execCmdEx("xdo pointer_motion -x +100")
+    result = execCmdEx("xdo pointer_motion -x +100")
 
 proc xdo_get_pid*(): string =
   ## Get PID of a window, integer type.
@@ -194,10 +194,15 @@ proc xdo_type_datetime*(): tuple =
 """
 
 
-when is_main_module:
+when is_main_module and defined(linux):
   echo version
   echo xdo_get_id()
   echo xdo_get_pid()
   echo xdo_move_mouse_random()
   echo xdo_move_mouse_top_left()
-  echo xdo_move_mouse((x: "+9", y: "-9"))
+  echo xdo_move_mouse((x: "+99", y: "+99"))
+  echo xdo_move_mouse_left_100px(2)
+  echo xdo_move_mouse_terminal_size()
+  echo xdo_move_mouse_top_100px(2)
+  # echo xdo_hide_all_but_focused_window()
+  # echo xdo_hide_focused_window()
