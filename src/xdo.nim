@@ -114,9 +114,9 @@ proc xdo_move_mouse_random*(maxx = 1024, maxy = 768, repetitions: int8 = 0): tup
   ## Move mouse to Random positions, repeat 0 to repetitions times.
   if repetitions != 0:
     for i in 0..repetitions:
-      execCmdEx(fmt"xdo pointer_motion -x {maxx.rand} -y {maxy.rand}")
+      result = execCmdEx(fmt"xdo pointer_motion -x {rand(maxx)} -y {rand(maxy)}")
   else:
-    execCmdEx(fmt"xdo pointer_motion -x {maxx.rand} -y {maxy.rand}")
+    result = execCmdEx(fmt"xdo pointer_motion -x {rand(maxx)} -y {rand(maxy)}")
 
 proc xdo_move_window_random*(pid: int, maxx = 1024, maxy = 768): tuple =
   ## Move Window to Random positions.
@@ -138,13 +138,13 @@ proc xdo_move_mouse_left_100px*(repetitions: int8): tuple =
   for i in 0..repetitions:
     execCmdEx("xdo pointer_motion -x +100")
 
-proc xdo_get_pid*(): int =
+proc xdo_get_pid*(): string =
   ## Get PID of a window, integer type.
-  parseInt(execCmdEx("xdo pid").output.strip)
+  parseHexStr(execCmdEx("xdo pid").output.strip)
 
-proc xdo_get_id*(): int =
+proc xdo_get_id*(): string =
   ## Get ID of a window, integer type.
-  parseInt(execCmdEx("xdo id").output.strip)
+  execCmdEx("xdo id").output.strip
 
 proc xdo_mouse_move_alternating*(move: tuple[x: int, y: int], repetitions: int8): tuple =
   ## Move mouse alternating to Left/Right Up/Down, AKA Zig-Zag movements.
