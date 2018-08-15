@@ -19,6 +19,7 @@ Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control 
 
 ```nim
 import xdo
+echo version                             # XDo Version (SemVer) when compiled.
 xdo_get_id()                             # Get current focused window ID.
 xdo_get_pid()                            # Get current focused window PID.
 xdo_move_mouse((x: "1000", y: "500"))    # Move Mouse by Absolute Coordinates.
