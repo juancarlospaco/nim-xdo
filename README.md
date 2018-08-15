@@ -2,6 +2,8 @@
 
 Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control from Nim code, procs for common actions.
 
+![Keyboard](keyboard_kitten.jpg "Keyboard typing simulation for everyone")
+
 
 # install
 
