@@ -233,26 +233,16 @@ proc xdo_mouse_spamm_right_click*(repetitions: int8): tuple =
   for i in 0..repetitions:
     result = execCmdEx("xdo button_press -k 3; xdo button_release -k 3")
 
+proc xdo_mouse_swipe_horizontal*(x: string): tuple =
+  ## Mouse Swipe to Left or Right, Hold Left Click+Drag Horizontally+Release Left Click.
+  execCmdEx("xdo button_press -k 1; xdo pointer_motion -x {x}; xdo button_release -k 1")
+
+proc xdo_mouse_swipe_vertical*(y: string): tuple =
+  ## Mouse Swipe to Up or Down, Hold Left Click+Drag Vertically+Release Left Click.
+  execCmdEx("xdo button_press -k 1; xdo pointer_motion -y {y}; xdo button_release -k 1")
+
 
 discard """
-proc xdo_mouse_left_click*(): tuple =
-  ## Mouse Left Click, 1 repetitions.
-  execCmdEx(fmt"")
-
-
-
-proc xdo_mouse_double_left_click*(): tuple =
-  ## Mouse Left Click, 2 repetitions (Double Click).
-  execCmdEx(fmt"")
-
-proc xdo_mouse_triple_left_click*(): tuple =
-  ## Mouse Left Click, 3 repetitions (Triple Click).
-  execCmdEx(fmt"")
-
-pproc xdo_mouse_double_left_click*(): tuple =
-  ## Mouse Left Click, 2 repetitions (Double Click).
-  execCmdEx(fmt"")
-
 proc xdo_type*(words: string, repetitions = 0): tuple =
   ## Type words using keyboard keys.
   execCmdEx(fmt"")
