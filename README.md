@@ -122,6 +122,7 @@ xdo_key_wasd(10)         # Keyboard Keys W,A,S,D as fast as possible (in games,m
 xdo_key_spamm_space(9)   # Keyboard Key Space as fast as possible (in games,bunny hop).
 xdo_key_w_click(100)     # Keyboard Key W and Mouse Left Click as fast as possible (in games,forward+hit).
 xdo_key_w_space(120)     # Keyboard Keys W,Space as fast as possible (in games, forward+jump).
+xdo_key_w_e(125)         # Keyboard Keys W,E as fast as possible (in games, forward+use).
 xdo_key_w_space_click(9) # Keyboard Keys W,Space and Mouse Left Click (in games, forward+jump+hit).
 xdo_key_wasd_random(100) # Keyboard Keys W,A,S,D,space Randomly as fast as possible.
 
