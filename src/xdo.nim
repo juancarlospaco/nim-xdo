@@ -420,6 +420,18 @@ proc xdo_key_spamm_space*(repetitions: int8): tuple =
   for i in 0..repetitions:
     result = execCmdEx("xdo key_press -k 32; xdo key_release -k 32")
 
+proc xdo_key_w_click*(repetitions: int8): tuple =
+  for i in 0..repetitions:
+    result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo button_press -k 1; xdo button_release -k 1")
+
+proc xdo_key_w_space*(repetitions: int8): tuple =
+  for i in 0..repetitions:
+    result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 32; xdo key_release -k 32")
+
+proc xdo_key_w_space_click*(repetitions: int8): tuple =
+  for i in 0..repetitions:
+    result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 32; xdo key_release -k 32; xdo button_press -k 1; xdo button_release -k 1")
+
 
 discard """
 proc xdo_type*(words: string, repetitions = 0): tuple =
