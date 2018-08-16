@@ -301,6 +301,39 @@ proc xdo_key_insert*(): tuple =
 proc xdo_key_delete*(): tuple =
   execCmdEx("xdo key_press -k 46; xdo key_release -k 46")
 
+proc xdo_key_f1*(): tuple =
+  execCmdEx("xdo key_press -k 112; xdo key_release -k 112")
+
+proc xdo_key_f2*(): tuple =
+  execCmdEx("xdo key_press -k 113; xdo key_release -k 113")
+
+proc xdo_key_f3*(): tuple =
+  execCmdEx("xdo key_press -k 114; xdo key_release -k 114")
+
+proc xdo_key_f4*(): tuple =
+  execCmdEx("xdo key_press -k 115; xdo key_release -k 115")
+
+proc xdo_key_f5*(): tuple =
+  execCmdEx("xdo key_press -k 116; xdo key_release -k 116")
+
+proc xdo_key_f6*(): tuple =
+  execCmdEx("xdo key_press -k 117; xdo key_release -k 117")
+
+proc xdo_key_f7*(): tuple =
+  execCmdEx("xdo key_press -k 118; xdo key_release -k 118")
+
+proc xdo_key_f8*(): tuple =
+  execCmdEx("xdo key_press -k 119; xdo key_release -k 119")
+
+proc xdo_key_f10*(): tuple =
+  execCmdEx("xdo key_press -k 121; xdo key_release -k 121")
+
+proc xdo_key_f11*(): tuple =
+  execCmdEx("xdo key_press -k 122; xdo key_release -k 122")
+
+proc xdo_key_f12*(): tuple =
+  execCmdEx("xdo key_press -k 123; xdo key_release -k 123")
+
 
 discard """
 proc xdo_type*(words: string, repetitions = 0): tuple =
