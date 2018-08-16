@@ -182,15 +182,48 @@ proc xdo_mouse_move_alternating*(move: tuple[x: int, y: int], repetitions: int8)
     yy = if i mod 2 == 0: "+" else: "-" & $move.y
     result = execCmdEx(fmt"xdo pointer_motion -x {xx} -y {yy}")
 
+proc xdo_mouse_left_click*(): tuple =
+  ## Mouse Left Click.
+  execCmdEx("xdo button_press -k 1; xdo button_release -k 1")
+
+proc xdo_mouse_middle_click*(): tuple =
+  ## Mouse Middle Click.
+  execCmdEx("xdo button_press -k 2; xdo button_release -k 2")
+
+proc xdo_mouse_right_click*(): tuple =
+  ## Mouse Right Click.
+  execCmdEx("xdo button_press -k 3; xdo button_release -k 3")
+
+proc xdo_mouse_double_left_click*(): tuple =
+  ## Mouse Double Left Click.
+  execCmdEx("xdo button_press -k 1; xdo button_release -k 1; xdo button_press -k 1; xdo button_release -k 1")
+
+proc xdo_mouse_double_middle_click*(): tuple =
+  ## Mouse Double Middle Click.
+  execCmdEx("xdo button_press -k 2; xdo button_release -k 2; xdo button_press -k 2; xdo button_release -k 2")
+
+proc xdo_mouse_double_right_click*(): tuple =
+  ## Mouse Double Right Click.
+  execCmdEx("xdo button_press -k 3; xdo button_release -k 3; xdo button_press -k 3; xdo button_release -k 3")
+
+proc xdo_mouse_triple_left_click*(): tuple =
+  ## Mouse Triple Left Click.
+  execCmdEx("xdo button_press -k 1; xdo button_release -k 1; xdo button_press -k 1; xdo button_release -k 1; xdo button_press -k 1; xdo button_release -k 1")
+
+proc xdo_mouse_triple_middle_click*(): tuple =
+  ## Mouse Triple Middle Click.
+  execCmdEx("xdo button_press -k 2; xdo button_release -k 2; xdo button_press -k 2; xdo button_release -k 2; xdo button_press -k 2; xdo button_release -k 2")
+
+proc xdo_mouse_triple_right_click*(): tuple =
+  ## Mouse Triple Right Click.
+  execCmdEx("xdo button_press -k 3; xdo button_release -k 3; xdo button_press -k 3; xdo button_release -k 3; xdo button_press -k 3; xdo button_release -k 3")
 
 discard """
 proc xdo_mouse_left_click*(): tuple =
   ## Mouse Left Click, 1 repetitions.
   execCmdEx(fmt"")
 
-proc xdo_mouse_right_click*(): tuple =
-  ## Mouse Right Click, 1 repetitions.
-  execCmdEx(fmt"")
+
 
 proc xdo_mouse_double_left_click*(): tuple =
   ## Mouse Left Click, 2 repetitions (Double Click).
