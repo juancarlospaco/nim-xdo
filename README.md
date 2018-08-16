@@ -125,6 +125,7 @@ xdo_key_w_space(120)     # Keyboard Keys W,Space as fast as possible (in games, 
 xdo_key_w_e(125)         # Keyboard Keys W,E as fast as possible (in games, forward+use).
 xdo_key_w_space_click(9) # Keyboard Keys W,Space and Mouse Left Click (in games, forward+jump+hit).
 xdo_key_wasd_random(100) # Keyboard Keys W,A,S,D,space Randomly as fast as possible.
+xdo_key_numbers_click(9) # 1,10clicks,2,10clicks,3,10clicks,etc up to 9 (in games, shoot weapons 1 to 9).
 
 # xdo() is also available as a very low level wrapper for XDo for advanced developers.
 ```
