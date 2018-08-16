@@ -313,6 +313,42 @@ proc xdo_key_mycomputer*(): tuple =
 proc xdo_key_mycalculator*(): tuple =
   execCmdEx("xdo key_press -k 183; xdo key_release -k 183")
 
+proc xdo_key_windows*(): tuple =
+  execCmdEx("xdo key_press -k 91; xdo key_release -k 91")
+
+proc xdo_key_rightclick*(): tuple =
+  execCmdEx("xdo key_press -k 93; xdo key_release -k 93")
+
+proc xdo_key_numpad0*(): tuple =
+  execCmdEx("xdo key_press -k 96; xdo key_release -k 96")
+
+proc xdo_key_numpad1*(): tuple =
+  execCmdEx("xdo key_press -k 97; xdo key_release -k 97")
+
+proc xdo_key_numpad2*(): tuple =
+  execCmdEx("xdo key_press -k 98; xdo key_release -k 98")
+
+proc xdo_key_numpad3*(): tuple =
+  execCmdEx("xdo key_press -k 99; xdo key_release -k 99")
+
+proc xdo_key_numpad4*(): tuple =
+  execCmdEx("xdo key_press -k 100; xdo key_release -k 100")
+
+proc xdo_key_numpad5*(): tuple =
+  execCmdEx("xdo key_press -k 101; xdo key_release -k 101")
+
+proc xdo_key_numpad6*(): tuple =
+  execCmdEx("xdo key_press -k 102; xdo key_release -k 102")
+
+proc xdo_key_numpad7*(): tuple =
+  execCmdEx("xdo key_press -k 103; xdo key_release -k 103")
+
+proc xdo_key_numpad8*(): tuple =
+  execCmdEx("xdo key_press -k 104; xdo key_release -k 104")
+
+proc xdo_key_numpad9*(): tuple =
+  execCmdEx("xdo key_press -k 105; xdo key_release -k 105")
+
 proc xdo_key_f1*(): tuple =
   execCmdEx("xdo key_press -k 112; xdo key_release -k 112")
 
@@ -345,6 +381,7 @@ proc xdo_key_f11*(): tuple =
 
 proc xdo_key_f12*(): tuple =
   execCmdEx("xdo key_press -k 123; xdo key_release -k 123")
+
 
 
 discard """
