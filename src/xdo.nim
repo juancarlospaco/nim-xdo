@@ -241,6 +241,66 @@ proc xdo_mouse_swipe_vertical*(y: string): tuple =
   ## Mouse Swipe to Up or Down, Hold Left Click+Drag Vertically+Release Left Click.
   execCmdEx("xdo button_press -k 1; xdo pointer_motion -y {y}; xdo button_release -k 1")
 
+proc xdo_key_backspace*(): tuple =
+  execCmdEx("xdo key_press -k 8; xdo key_release -k 8")
+
+proc xdo_key_tab*(): tuple =
+  execCmdEx("xdo key_press -k 9; xdo key_release -k 9")
+
+proc xdo_key_enter*(): tuple =
+  execCmdEx("xdo key_press -k 13; xdo key_release -k 13")
+
+proc xdo_key_shift*(): tuple =
+  execCmdEx("xdo key_press -k 16; xdo key_release -k 16")
+
+proc xdo_key_ctrl*(): tuple =
+  execCmdEx("xdo key_press -k 17; xdo key_release -k 17")
+
+proc xdo_key_alt*(): tuple =
+  execCmdEx("xdo key_press -k 18; xdo key_release -k 18")
+
+proc xdo_key_pause*(): tuple =
+  execCmdEx("xdo key_press -k 19; xdo key_release -k 19")
+
+proc xdo_key_capslock*(): tuple =
+  execCmdEx("xdo key_press -k 20; xdo key_release -k 20")
+
+proc xdo_key_esc*(): tuple =
+  execCmdEx("xdo key_press -k 27; xdo key_release -k 27")
+
+proc xdo_key_space*(): tuple =
+  execCmdEx("xdo key_press -k 32; xdo key_release -k 32")
+
+proc xdo_key_pageup*(): tuple =
+  execCmdEx("xdo key_press -k 33; xdo key_release -k 33")
+
+proc xdo_key_pagedown*(): tuple =
+  execCmdEx("xdo key_press -k 34; xdo key_release -k 34")
+
+proc xdo_key_end*(): tuple =
+  execCmdEx("xdo key_press -k 35; xdo key_release -k 35")
+
+proc xdo_key_home*(): tuple =
+  execCmdEx("xdo key_press -k 36; xdo key_release -k 36")
+
+proc xdo_key_arrow_left*(): tuple =
+  execCmdEx("xdo key_press -k 37; xdo key_release -k 37")
+
+proc xdo_key_arrow_up*(): tuple =
+  execCmdEx("xdo key_press -k 38; xdo key_release -k 38")
+
+proc xdo_key_arrow_right*(): tuple =
+  execCmdEx("xdo key_press -k 39; xdo key_release -k 39")
+
+proc xdo_key_arrow_down*(): tuple =
+  execCmdEx("xdo key_press -k 40; xdo key_release -k 40")
+
+proc xdo_key_insert*(): tuple =
+  execCmdEx("xdo key_press -k 45; xdo key_release -k 45")
+
+proc xdo_key_delete*(): tuple =
+  execCmdEx("xdo key_press -k 46; xdo key_release -k 46")
+
 
 discard """
 proc xdo_type*(words: string, repetitions = 0): tuple =
