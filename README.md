@@ -19,9 +19,9 @@ Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control 
 
 ```nim
 import xdo
-echo xdo_version                         # XDo Version (SemVer) when compiled.
-xdo_get_id()                             # Get current focused window ID.
-xdo_get_pid()                            # Get current focused window PID.
+echo xdo_version # XDo Version (SemVer) when compiled.
+xdo_get_id()     # Get current focused window ID.
+xdo_get_pid()    # Get current focused window PID.
 
 xdo_move_mouse((x: "1000", y: "500"))    # Move Mouse by Absolute Coordinates.
 xdo_move_mouse((x: "+50", y: "-75"))     # Move Mouse by Relative Delta.
@@ -41,18 +41,18 @@ xdo_raise_all_but_focused_window() # Raise up all other windows but the current 
 xdo_lower_all_but_focused_window() # Lower down all other windows but the current focused window.
 xdo_show_all_but_focused_window()  # Show all other windows but the current focused window.
 
-xdo_mouse_left_click()          # Mouse Left Click.
-xdo_mouse_middle_click()        # Mouse Middle Click.
-xdo_mouse_right_click()         # Mouse Right Click.
-xdo_mouse_double_left_click()   # Mouse Double Left Click.
-xdo_mouse_double_middle_click() # Mouse Double Middle Click.
-xdo_mouse_double_right_click()  # Mouse Double Right Click.
-xdo_mouse_triple_left_click()   # Mouse Triple Left Click.
-xdo_mouse_triple_middle_click() # Mouse Triple Middle Click.
-xdo_mouse_triple_right_click()  # Mouse Triple Right Click.
-xdo_mouse_spamm_left_click(100) # Spamm Mouse Left Click as fast as possible.
-xdo_mouse_spamm_middle_click(9) # Spamm Mouse Middle Click as fast as possible.
-xdo_mouse_spamm_right_click(50) # Spamm Mouse Right Click as fast as possible.
+xdo_mouse_left_click()           # Mouse Left Click.
+xdo_mouse_middle_click()         # Mouse Middle Click.
+xdo_mouse_right_click()          # Mouse Right Click.
+xdo_mouse_double_left_click()    # Mouse Double Left Click.
+xdo_mouse_double_middle_click()  # Mouse Double Middle Click.
+xdo_mouse_double_right_click()   # Mouse Double Right Click.
+xdo_mouse_triple_left_click()    # Mouse Triple Left Click.
+xdo_mouse_triple_middle_click()  # Mouse Triple Middle Click.
+xdo_mouse_triple_right_click()   # Mouse Triple Right Click.
+xdo_mouse_spamm_left_click(100)  # Spamm Mouse Left Click as fast as possible.
+xdo_mouse_spamm_middle_click(9)  # Spamm Mouse Middle Click as fast as possible.
+xdo_mouse_spamm_right_click(50)  # Spamm Mouse Right Click as fast as possible.
 xdo_mouse_swipe_horizontal("+9") # Mouse Swipe to Left or Right, Hold Left Click+Drag Horizontally+Release Left Click.
 xdo_mouse_swipe_vertical("-99")  # Mouse Swipe to Up or Down, Hold Left Click+Drag Vertically+Release Left Click.
 
