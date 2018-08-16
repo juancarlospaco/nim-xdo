@@ -437,6 +437,10 @@ proc xdo_key_wasd_random*(repetitions: int8): tuple =
     var kycds = [87, 65, 83, 68, 32].rand
     result = execCmdEx(fmt"xdo key_press -k {kycds}; xdo key_release -k {kycds}")
 
+proc xdo_key_w_e*(repetitions: int8): tuple =
+  for i in 0..repetitions:
+    result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 69; xdo key_release -k 69")
+
 
 
 discard """
