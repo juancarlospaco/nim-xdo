@@ -412,6 +412,14 @@ proc xdo_key_8*(): tuple =
 proc xdo_key_9*(): tuple =
   execCmdEx("xdo key_press -k 57; xdo key_release -k 57")
 
+proc xdo_key_wasd*(repetitions: int8): tuple =
+  for i in 0..repetitions:
+    result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 65; xdo key_release -k 65; xdo key_press -k 83; xdo key_release -k 83; xdo key_press -k 68; xdo key_release -k 68")
+
+proc xdo_key_spamm_space*(repetitions: int8): tuple =
+  for i in 0..repetitions:
+    result = execCmdEx("xdo key_press -k 32; xdo key_release -k 32")
+
 
 discard """
 proc xdo_type*(words: string, repetitions = 0): tuple =
@@ -443,5 +451,15 @@ when is_main_module and defined(linux):
   echo xdo_move_mouse_terminal_size()
   echo xdo_move_mouse_top_100px(2)
   echo xdo_mouse_move_alternating((x: 9, y: 5), 3)
+  echo xdo_key_0()
+  echo xdo_key_1()
+  echo xdo_key_2()
+  echo xdo_key_3()
+  echo xdo_key_4()
+  echo xdo_key_5()
+  echo xdo_key_6()
+  echo xdo_key_7()
+  echo xdo_key_8()
+  echo xdo_key_9()
   # echo xdo_hide_all_but_focused_window()
   # echo xdo_hide_focused_window()
