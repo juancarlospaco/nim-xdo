@@ -441,6 +441,12 @@ proc xdo_key_w_e*(repetitions: int8): tuple =
   for i in 0..repetitions:
     result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 69; xdo key_release -k 69")
 
+proc xdo_key_numbers_click*(repetitions: int8): tuple =
+  for repeat in 0..repetitions:
+    for i in 49..57:
+      discard execCmdEx(fmt"xdo key_press -k {i}; xdo key_release -k {i}")
+      for x in 0..9:
+        result = execCmdEx("xdo button_press -k 1; xdo button_release -k 1")
 
 
 discard """
