@@ -301,6 +301,18 @@ proc xdo_key_insert*(): tuple =
 proc xdo_key_delete*(): tuple =
   execCmdEx("xdo key_press -k 46; xdo key_release -k 46")
 
+proc xdo_key_numlock*(): tuple =
+  execCmdEx("xdo key_press -k 144; xdo key_release -k 144")
+
+proc xdo_key_scrolllock*(): tuple =
+  execCmdEx("xdo key_press -k 145; xdo key_release -k 145")
+
+proc xdo_key_mycomputer*(): tuple =
+  execCmdEx("xdo key_press -k 182; xdo key_release -k 182")
+
+proc xdo_key_mycalculator*(): tuple =
+  execCmdEx("xdo key_press -k 183; xdo key_release -k 183")
+
 proc xdo_key_f1*(): tuple =
   execCmdEx("xdo key_press -k 112; xdo key_release -k 112")
 
