@@ -432,6 +432,12 @@ proc xdo_key_w_space_click*(repetitions: int8): tuple =
   for i in 0..repetitions:
     result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 32; xdo key_release -k 32; xdo button_press -k 1; xdo button_release -k 1")
 
+proc xdo_key_wasd_random*(repetitions: int8): tuple =
+  for i in 0..repetitions:
+    var kycds = [87, 65, 83, 68, 32].rand
+    result = execCmdEx(fmt"xdo key_press -k {kycds}; xdo key_release -k {kycds}")
+
+
 
 discard """
 proc xdo_type*(words: string, repetitions = 0): tuple =
