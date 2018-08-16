@@ -218,6 +218,22 @@ proc xdo_mouse_triple_right_click*(): tuple =
   ## Mouse Triple Right Click.
   execCmdEx("xdo button_press -k 3; xdo button_release -k 3; xdo button_press -k 3; xdo button_release -k 3; xdo button_press -k 3; xdo button_release -k 3")
 
+proc xdo_mouse_spamm_left_click*(repetitions: int8): tuple =
+  ## Spamm Mouse Left Click as fast as possible.
+  for i in 0..repetitions:
+    result = execCmdEx("xdo button_press -k 1; xdo button_release -k 1")
+
+proc xdo_mouse_spamm_middle_click*(repetitions: int8): tuple =
+  ## Spamm Mouse Middle Click as fast as possible.
+  for i in 0..repetitions:
+    result = execCmdEx("xdo button_press -k 2; xdo button_release -k 2")
+
+proc xdo_mouse_spamm_right_click*(repetitions: int8): tuple =
+  ## Spamm Mouse Right Click as fast as possible.
+  for i in 0..repetitions:
+    result = execCmdEx("xdo button_press -k 3; xdo button_release -k 3")
+
+
 discard """
 proc xdo_mouse_left_click*(): tuple =
   ## Mouse Left Click, 1 repetitions.
