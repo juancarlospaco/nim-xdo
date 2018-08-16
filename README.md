@@ -51,8 +51,8 @@ xdo_mouse_triple_left_click()   # Mouse Triple Left Click.
 xdo_mouse_triple_middle_click() # Mouse Triple Middle Click.
 xdo_mouse_triple_right_click()  # Mouse Triple Right Click.
 xdo_mouse_spamm_left_click(100) # Spamm Mouse Left Click as fast as possible.
-xdo_mouse_spamm_middle_click(1) # Spamm Mouse Middle Click as fast as possible.
-xdo_mouse_spamm_right_click(10) # Spamm Mouse Right Click as fast as possible.
+xdo_mouse_spamm_middle_click(9) # Spamm Mouse Middle Click as fast as possible.
+xdo_mouse_spamm_right_click(50) # Spamm Mouse Right Click as fast as possible.
 
 # xdo() is also available as a very low level wrapper for XDo for advanced developers.
 ```
