@@ -83,29 +83,40 @@ xdo_key_mycalculator() # Keyboard Key My Calculator (HotKey thingy).
 xdo_key_windows()      # Keyboard Key Windows (AKA Meta Key).
 xdo_key_rightclick()   # Keyboard Key Right Click (HotKey thingy).
 
-xdo_key_numpad0()      # Keyboard Key Numeric Pad 0.
-xdo_key_numpad1()      # Keyboard Key Numeric Pad 1.
-xdo_key_numpad2()      # Keyboard Key Numeric Pad 2.
-xdo_key_numpad3()      # Keyboard Key Numeric Pad 3.
-xdo_key_numpad4()      # Keyboard Key Numeric Pad 4.
-xdo_key_numpad5()      # Keyboard Key Numeric Pad 5.
-xdo_key_numpad6()      # Keyboard Key Numeric Pad 6.
-xdo_key_numpad7()      # Keyboard Key Numeric Pad 7.
-xdo_key_numpad8()      # Keyboard Key Numeric Pad 8.
-xdo_key_numpad9()      # Keyboard Key Numeric Pad 9.
+xdo_key_numpad0() # Keyboard Key Numeric Pad 0.
+xdo_key_numpad1() # Keyboard Key Numeric Pad 1.
+xdo_key_numpad2() # Keyboard Key Numeric Pad 2.
+xdo_key_numpad3() # Keyboard Key Numeric Pad 3.
+xdo_key_numpad4() # Keyboard Key Numeric Pad 4.
+xdo_key_numpad5() # Keyboard Key Numeric Pad 5.
+xdo_key_numpad6() # Keyboard Key Numeric Pad 6.
+xdo_key_numpad7() # Keyboard Key Numeric Pad 7.
+xdo_key_numpad8() # Keyboard Key Numeric Pad 8.
+xdo_key_numpad9() # Keyboard Key Numeric Pad 9.
 
-xdo_key_f1()          # Keyboard Key F1.
-xdo_key_f2()          # Keyboard Key F2.
-xdo_key_f3()          # Keyboard Key F3.
-xdo_key_f4()          # Keyboard Key F4.
-xdo_key_f5()          # Keyboard Key F5.
-xdo_key_f6()          # Keyboard Key F6.
-xdo_key_f7()          # Keyboard Key F7.
-xdo_key_f8()          # Keyboard Key F8.
-xdo_key_f9()          # Keyboard Key F9.
-xdo_key_f10()         # Keyboard Key F10.
-xdo_key_f11()         # Keyboard Key F11.
-xdo_key_f12()         # Keyboard Key F12.
+xdo_key_f1()      # Keyboard Key F1.
+xdo_key_f2()      # Keyboard Key F2.
+xdo_key_f3()      # Keyboard Key F3.
+xdo_key_f4()      # Keyboard Key F4.
+xdo_key_f5()      # Keyboard Key F5.
+xdo_key_f6()      # Keyboard Key F6.
+xdo_key_f7()      # Keyboard Key F7.
+xdo_key_f8()      # Keyboard Key F8.
+xdo_key_f9()      # Keyboard Key F9.
+xdo_key_f10()     # Keyboard Key F10.
+xdo_key_f11()     # Keyboard Key F11.
+xdo_key_f12()     # Keyboard Key F12.
+
+xdo_key_0()       # Keyboard Key 0.
+xdo_key_1()       # Keyboard Key 1.
+xdo_key_2()       # Keyboard Key 2.
+xdo_key_3()       # Keyboard Key 3.
+xdo_key_4()       # Keyboard Key 4.
+xdo_key_5()       # Keyboard Key 5.
+xdo_key_6()       # Keyboard Key 6.
+xdo_key_7()       # Keyboard Key 7.
+xdo_key_8()       # Keyboard Key 8.
+xdo_key_9()       # Keyboard Key 9.
 
 # xdo() is also available as a very low level wrapper for XDo for advanced developers.
 ```
