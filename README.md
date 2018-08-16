@@ -118,6 +118,9 @@ xdo_key_7()       # Keyboard Key 7.
 xdo_key_8()       # Keyboard Key 8.
 xdo_key_9()       # Keyboard Key 9.
 
+xdo_key_wasd(10)       # Keyboard Keys W,A,S,D as fast as possible (in games,make circles).
+xdo_key_spamm_space(9) # Keyboard Key Space as fast as possible (in games,bunny hop).
+
 # xdo() is also available as a very low level wrapper for XDo for advanced developers.
 ```
 
