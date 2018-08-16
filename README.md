@@ -56,6 +56,27 @@ xdo_mouse_spamm_right_click(50)  # Spamm Mouse Right Click as fast as possible.
 xdo_mouse_swipe_horizontal("+9") # Mouse Swipe to Left or Right, Hold Left Click+Drag Horizontally+Release Left Click.
 xdo_mouse_swipe_vertical("-99")  # Mouse Swipe to Up or Down, Hold Left Click+Drag Vertically+Release Left Click.
 
+xdo_key_backspace()   # Keyboard Key Backspace.
+xdo_key_tab()         # Keyboard Key Tab.
+xdo_key_enter()       # Keyboard Key Enter.
+xdo_key_shift()       # Keyboard Key Shift.
+xdo_key_ctrl()        # Keyboard Key Ctrl.
+xdo_key_alt()         # Keyboard Key Alt.
+xdo_key_pause()       # Keyboard Key Pause.
+xdo_key_capslock()    # Keyboard Key Caps Lock.
+xdo_key_esc()         # Keyboard Key Esc.
+xdo_key_space()       # Keyboard Key Space.
+xdo_key_pageup()      # Keyboard Key Page Up.
+xdo_key_pagedown()    # Keyboard Key Page Down.
+xdo_key_end()         # Keyboard Key End.
+xdo_key_home()        # Keyboard Key Home.
+xdo_key_arrow_left()  # Keyboard Key Arrow Left.
+xdo_key_arrow_up()    # Keyboard Key Arrow Up.
+xdo_key_arrow_right() # Keyboard Key Arrow Right.
+xdo_key_arrow_down()  # Keyboard Key Arrow Down.
+xdo_key_insert()      # Keyboard Key Insert.
+xdo_key_delete()      # Keyboard Key Delete.
+
 # xdo() is also available as a very low level wrapper for XDo for advanced developers.
 ```
 
