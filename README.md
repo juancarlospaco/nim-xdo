@@ -22,6 +22,7 @@ import xdo
 echo xdo_version                         # XDo Version (SemVer) when compiled.
 xdo_get_id()                             # Get current focused window ID.
 xdo_get_pid()                            # Get current focused window PID.
+
 xdo_move_mouse((x: "1000", y: "500"))    # Move Mouse by Absolute Coordinates.
 xdo_move_mouse((x: "+50", y: "-75"))     # Move Mouse by Relative Delta.
 xdo_move_window((x: "500", y: "1000"))   # Move Window by Absolute Coordinates.
@@ -39,6 +40,17 @@ xdo_activate_this_window(pid: 666) # Force to Activate this window by PID.
 xdo_raise_all_but_focused_window() # Raise up all other windows but the current focused window.
 xdo_lower_all_but_focused_window() # Lower down all other windows but the current focused window.
 xdo_show_all_but_focused_window()  # Show all other windows but the current focused window.
+
+xdo_mouse_left_click()          # Mouse Left Click.
+xdo_mouse_middle_click()        # Mouse Middle Click.
+xdo_mouse_right_click()         # Mouse Right Click.
+xdo_mouse_double_left_click()   # Mouse Double Left Click.
+xdo_mouse_double_middle_click() # Mouse Double Middle Click.
+xdo_mouse_double_right_click()  # Mouse Double Right Click.
+xdo_mouse_triple_left_click()   # Mouse Triple Left Click.
+xdo_mouse_triple_middle_click() # Mouse Triple Middle Click.
+xdo_mouse_triple_right_click()  # Mouse Triple Right Click.
+
 # xdo() is also available as a very low level wrapper for XDo for advanced developers.
 ```
 
