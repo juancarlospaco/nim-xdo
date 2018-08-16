@@ -77,6 +77,19 @@ xdo_key_arrow_down()  # Keyboard Key Arrow Down.
 xdo_key_insert()      # Keyboard Key Insert.
 xdo_key_delete()      # Keyboard Key Delete.
 
+xdo_key_f1()          # Keyboard Key F1.
+xdo_key_f2()          # Keyboard Key F2.
+xdo_key_f3()          # Keyboard Key F3.
+xdo_key_f4()          # Keyboard Key F4.
+xdo_key_f5()          # Keyboard Key F5.
+xdo_key_f6()          # Keyboard Key F6.
+xdo_key_f7()          # Keyboard Key F7.
+xdo_key_f8()          # Keyboard Key F8.
+xdo_key_f9()          # Keyboard Key F9.
+xdo_key_f10()         # Keyboard Key F10.
+xdo_key_f11()         # Keyboard Key F11.
+xdo_key_f12()         # Keyboard Key F12.
+
 # xdo() is also available as a very low level wrapper for XDo for advanced developers.
 ```
 
