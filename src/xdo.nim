@@ -382,6 +382,35 @@ proc xdo_key_f11*(): tuple =
 proc xdo_key_f12*(): tuple =
   execCmdEx("xdo key_press -k 123; xdo key_release -k 123")
 
+proc xdo_key_0*(): tuple =
+  execCmdEx("xdo key_press -k 48; xdo key_release -k 48")
+
+proc xdo_key_1*(): tuple =
+  execCmdEx("xdo key_press -k 49; xdo key_release -k 49")
+
+proc xdo_key_2*(): tuple =
+  execCmdEx("xdo key_press -k 50; xdo key_release -k 50")
+
+proc xdo_key_3*(): tuple =
+  execCmdEx("xdo key_press -k 51; xdo key_release -k 51")
+
+proc xdo_key_4*(): tuple =
+  execCmdEx("xdo key_press -k 52; xdo key_release -k 52")
+
+proc xdo_key_5*(): tuple =
+  execCmdEx("xdo key_press -k 53; xdo key_release -k 53")
+
+proc xdo_key_6*(): tuple =
+  execCmdEx("xdo key_press -k 54; xdo key_release -k 54")
+
+proc xdo_key_7*(): tuple =
+  execCmdEx("xdo key_press -k 55; xdo key_release -k 55")
+
+proc xdo_key_8*(): tuple =
+  execCmdEx("xdo key_press -k 56; xdo key_release -k 56")
+
+proc xdo_key_9*(): tuple =
+  execCmdEx("xdo key_press -k 57; xdo key_release -k 57")
 
 
 discard """
