@@ -78,9 +78,9 @@ xdo_key_insert()       # Keyboard Key Insert.
 xdo_key_delete()       # Keyboard Key Delete.
 xdo_key_numlock()      # Keyboard Key Num Lock.
 xdo_key_scrolllock()   # Keyboard Key Scroll Lock.
-xdo_key_mycomputer()   # Keyboard Key My Computer.
-xdo_key_mycalculator() # Keyboard Key My Calculator.
-xdo_key_windows()      # Keyboard Key Windows.
+xdo_key_mycomputer()   # Keyboard Key My Computer (HotKey thingy).
+xdo_key_mycalculator() # Keyboard Key My Calculator (HotKey thingy).
+xdo_key_windows()      # Keyboard Key Windows (AKA Meta Key).
 xdo_key_rightclick()   # Keyboard Key Right Click (HotKey thingy).
 
 xdo_key_numpad0()      # Keyboard Key Numeric Pad 0.
