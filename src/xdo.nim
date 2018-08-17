@@ -242,81 +242,107 @@ proc xdo_mouse_swipe_vertical*(y: string): tuple =
   execCmdEx("xdo button_press -k 1; xdo pointer_motion -y {y}; xdo button_release -k 1")
 
 proc xdo_key_backspace*(): tuple =
+  ## Keyboard Key Backspace.
   execCmdEx("xdo key_press -k 8; xdo key_release -k 8")
 
 proc xdo_key_tab*(): tuple =
+  ## Keyboard Key Tab.
   execCmdEx("xdo key_press -k 9; xdo key_release -k 9")
 
 proc xdo_key_enter*(): tuple =
+  ## Keyboard Key Enter.
   execCmdEx("xdo key_press -k 13; xdo key_release -k 13")
 
 proc xdo_key_shift*(): tuple =
+  ## Keyboard Key Shift.
   execCmdEx("xdo key_press -k 16; xdo key_release -k 16")
 
 proc xdo_key_ctrl*(): tuple =
+  ## Keyboard Key Ctrl.
   execCmdEx("xdo key_press -k 17; xdo key_release -k 17")
 
 proc xdo_key_alt*(): tuple =
+  ## Keyboard Key Alt.
   execCmdEx("xdo key_press -k 18; xdo key_release -k 18")
 
 proc xdo_key_pause*(): tuple =
+  ## Keyboard Key Pause.
   execCmdEx("xdo key_press -k 19; xdo key_release -k 19")
 
 proc xdo_key_capslock*(): tuple =
+  ## Keyboard Key Caps Lock.
   execCmdEx("xdo key_press -k 20; xdo key_release -k 20")
 
 proc xdo_key_esc*(): tuple =
+  ## Keyboard Key Esc.
   execCmdEx("xdo key_press -k 27; xdo key_release -k 27")
 
 proc xdo_key_space*(): tuple =
+  ## Keyboard Key Space.
   execCmdEx("xdo key_press -k 32; xdo key_release -k 32")
 
 proc xdo_key_pageup*(): tuple =
+  ## Keyboard Key Page Up.
   execCmdEx("xdo key_press -k 33; xdo key_release -k 33")
 
 proc xdo_key_pagedown*(): tuple =
+  ## Keyboard Key Page Down.
   execCmdEx("xdo key_press -k 34; xdo key_release -k 34")
 
 proc xdo_key_end*(): tuple =
+  ## Keyboard Key End.
   execCmdEx("xdo key_press -k 35; xdo key_release -k 35")
 
 proc xdo_key_home*(): tuple =
+  ## Keyboard Key Home.
   execCmdEx("xdo key_press -k 36; xdo key_release -k 36")
 
 proc xdo_key_arrow_left*(): tuple =
+  ## Keyboard Key Arrow Left.
   execCmdEx("xdo key_press -k 37; xdo key_release -k 37")
 
 proc xdo_key_arrow_up*(): tuple =
+  ## Keyboard Key Arrow Up.
   execCmdEx("xdo key_press -k 38; xdo key_release -k 38")
 
 proc xdo_key_arrow_right*(): tuple =
+  ## Keyboard Key Arrow Right.
   execCmdEx("xdo key_press -k 39; xdo key_release -k 39")
 
 proc xdo_key_arrow_down*(): tuple =
+  ## Keyboard Key Arrow Down.
   execCmdEx("xdo key_press -k 40; xdo key_release -k 40")
 
 proc xdo_key_insert*(): tuple =
+  ## Keyboard Key Insert.
   execCmdEx("xdo key_press -k 45; xdo key_release -k 45")
 
 proc xdo_key_delete*(): tuple =
+  ## Keyboard Key Delete.
   execCmdEx("xdo key_press -k 46; xdo key_release -k 46")
 
 proc xdo_key_numlock*(): tuple =
+  ## Keyboard Key Num Lock.
   execCmdEx("xdo key_press -k 144; xdo key_release -k 144")
 
 proc xdo_key_scrolllock*(): tuple =
+  ## Keyboard Key Scroll Lock.
   execCmdEx("xdo key_press -k 145; xdo key_release -k 145")
 
 proc xdo_key_mycomputer*(): tuple =
+  ## Keyboard Key My Computer (HotKey thingy of some modern keyboards).
   execCmdEx("xdo key_press -k 182; xdo key_release -k 182")
 
 proc xdo_key_mycalculator*(): tuple =
+  ## Keyboard Key My Calculator (HotKey thingy of some modern keyboards).
   execCmdEx("xdo key_press -k 183; xdo key_release -k 183")
 
 proc xdo_key_windows*(): tuple =
+  ## Keyboard Key Windows (AKA Meta Key).
   execCmdEx("xdo key_press -k 91; xdo key_release -k 91")
 
 proc xdo_key_rightclick*(): tuple =
+  ## Keyboard Key Right Click (HotKey thingy, fake click from keyboard key).
   execCmdEx("xdo key_press -k 93; xdo key_release -k 93")
 
 proc xdo_key_numpad0*(): tuple =
