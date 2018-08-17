@@ -346,66 +346,91 @@ proc xdo_key_rightclick*(): tuple =
   execCmdEx("xdo key_press -k 93; xdo key_release -k 93")
 
 proc xdo_key_numpad0*(): tuple =
+  ## Keyboard Key Numeric Pad 0.
   execCmdEx("xdo key_press -k 96; xdo key_release -k 96")
 
 proc xdo_key_numpad1*(): tuple =
+  ## Keyboard Key Numeric Pad 1.
   execCmdEx("xdo key_press -k 97; xdo key_release -k 97")
 
 proc xdo_key_numpad2*(): tuple =
+  ## Keyboard Key Numeric Pad 2.
   execCmdEx("xdo key_press -k 98; xdo key_release -k 98")
 
 proc xdo_key_numpad3*(): tuple =
+  ## Keyboard Key Numeric Pad 3.
   execCmdEx("xdo key_press -k 99; xdo key_release -k 99")
 
 proc xdo_key_numpad4*(): tuple =
+  ## Keyboard Key Numeric Pad 4.
   execCmdEx("xdo key_press -k 100; xdo key_release -k 100")
 
 proc xdo_key_numpad5*(): tuple =
+  ## Keyboard Key Numeric Pad 5.
   execCmdEx("xdo key_press -k 101; xdo key_release -k 101")
 
 proc xdo_key_numpad6*(): tuple =
+  ## Keyboard Key Numeric Pad 6.
   execCmdEx("xdo key_press -k 102; xdo key_release -k 102")
 
 proc xdo_key_numpad7*(): tuple =
+  ## Keyboard Key Numeric Pad 7.
   execCmdEx("xdo key_press -k 103; xdo key_release -k 103")
 
 proc xdo_key_numpad8*(): tuple =
+  ## Keyboard Key Numeric Pad 8.
   execCmdEx("xdo key_press -k 104; xdo key_release -k 104")
 
 proc xdo_key_numpad9*(): tuple =
+  ## Keyboard Key Numeric Pad 9.
   execCmdEx("xdo key_press -k 105; xdo key_release -k 105")
 
 proc xdo_key_f1*(): tuple =
+  ## Keyboard Key F1.
   execCmdEx("xdo key_press -k 112; xdo key_release -k 112")
 
 proc xdo_key_f2*(): tuple =
+  ## Keyboard Key F2.
   execCmdEx("xdo key_press -k 113; xdo key_release -k 113")
 
 proc xdo_key_f3*(): tuple =
+  ## Keyboard Key F3.
   execCmdEx("xdo key_press -k 114; xdo key_release -k 114")
 
 proc xdo_key_f4*(): tuple =
+  ## Keyboard Key F4.
   execCmdEx("xdo key_press -k 115; xdo key_release -k 115")
 
 proc xdo_key_f5*(): tuple =
+  ## Keyboard Key F5.
   execCmdEx("xdo key_press -k 116; xdo key_release -k 116")
 
 proc xdo_key_f6*(): tuple =
+  ## Keyboard Key F6.
   execCmdEx("xdo key_press -k 117; xdo key_release -k 117")
 
 proc xdo_key_f7*(): tuple =
+  ## Keyboard Key F7.
   execCmdEx("xdo key_press -k 118; xdo key_release -k 118")
 
 proc xdo_key_f8*(): tuple =
+  ## Keyboard Key F8.
   execCmdEx("xdo key_press -k 119; xdo key_release -k 119")
 
+proc xdo_key_f9*(): tuple =
+  ## Keyboard Key F9.
+  execCmdEx("xdo key_press -k 120; xdo key_release -k 120")
+
 proc xdo_key_f10*(): tuple =
+  ## Keyboard Key F10.
   execCmdEx("xdo key_press -k 121; xdo key_release -k 121")
 
 proc xdo_key_f11*(): tuple =
+  ## Keyboard Key F11.
   execCmdEx("xdo key_press -k 122; xdo key_release -k 122")
 
 proc xdo_key_f12*(): tuple =
+  ## Keyboard Key F12.
   execCmdEx("xdo key_press -k 123; xdo key_release -k 123")
 
 proc xdo_key_0*(): tuple =
