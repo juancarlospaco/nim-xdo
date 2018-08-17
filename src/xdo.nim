@@ -64,7 +64,7 @@ randomize()
 proc xdo*(action: Actions, move: tuple[x: string, y: string] = (x: "0", y: "0"),
           instance_name = "", class_name = "", wm_name = "", pid = 0,
           wait4window = false, same_desktop = true, same_class = true, same_id = true): tuple =
-  ## XDo low level wrapping proc, almost all arguments are supported.
+  ## XDo proc is a very low level wrapper for XDo for advanced developers, almost all arguments are supported.
   let
     a = if wait4window: "m" else: ""
     b = if same_id: "" else: "r"
@@ -516,6 +516,7 @@ proc xdo_key_numbers_click*(repetitions: int8): tuple =
       discard execCmdEx(fmt"xdo key_press -k {i}; xdo key_release -k {i}")
       for x in 0..9:
         result = execCmdEx("xdo button_press -k 1; xdo button_release -k 1")
+
 
 
 discard """
