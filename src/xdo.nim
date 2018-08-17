@@ -434,65 +434,83 @@ proc xdo_key_f12*(): tuple =
   execCmdEx("xdo key_press -k 123; xdo key_release -k 123")
 
 proc xdo_key_0*(): tuple =
+  ## Keyboard Key 0.
   execCmdEx("xdo key_press -k 48; xdo key_release -k 48")
 
 proc xdo_key_1*(): tuple =
+  ## Keyboard Key 1.
   execCmdEx("xdo key_press -k 49; xdo key_release -k 49")
 
 proc xdo_key_2*(): tuple =
+  ## Keyboard Key 2.
   execCmdEx("xdo key_press -k 50; xdo key_release -k 50")
 
 proc xdo_key_3*(): tuple =
+  ## Keyboard Key 3.
   execCmdEx("xdo key_press -k 51; xdo key_release -k 51")
 
 proc xdo_key_4*(): tuple =
+  ## Keyboard Key 4.
   execCmdEx("xdo key_press -k 52; xdo key_release -k 52")
 
 proc xdo_key_5*(): tuple =
+  ## Keyboard Key 5.
   execCmdEx("xdo key_press -k 53; xdo key_release -k 53")
 
 proc xdo_key_6*(): tuple =
+  ## Keyboard Key 6.
   execCmdEx("xdo key_press -k 54; xdo key_release -k 54")
 
 proc xdo_key_7*(): tuple =
+  ## Keyboard Key 7.
   execCmdEx("xdo key_press -k 55; xdo key_release -k 55")
 
 proc xdo_key_8*(): tuple =
+  ## Keyboard Key 8.
   execCmdEx("xdo key_press -k 56; xdo key_release -k 56")
 
 proc xdo_key_9*(): tuple =
+  ## Keyboard Key 9.
   execCmdEx("xdo key_press -k 57; xdo key_release -k 57")
 
 proc xdo_key_wasd*(repetitions: int8): tuple =
+  ## Keyboard Keys W,A,S,D as fast as possible (in games,make circles).
   for i in 0..repetitions:
     result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 65; xdo key_release -k 65; xdo key_press -k 83; xdo key_release -k 83; xdo key_press -k 68; xdo key_release -k 68")
 
 proc xdo_key_spamm_space*(repetitions: int8): tuple =
+  ## Keyboard Key Space as fast as possible (in games,bunny hop).
   for i in 0..repetitions:
     result = execCmdEx("xdo key_press -k 32; xdo key_release -k 32")
 
 proc xdo_key_w_click*(repetitions: int8): tuple =
+  ## Keyboard Key W and Mouse Left Click as fast as possible (in games,forward+hit).
   for i in 0..repetitions:
     result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo button_press -k 1; xdo button_release -k 1")
 
 proc xdo_key_w_space*(repetitions: int8): tuple =
+  ## Keyboard Keys W,Space as fast as possible (in games, forward+jump).
   for i in 0..repetitions:
     result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 32; xdo key_release -k 32")
 
 proc xdo_key_w_space_click*(repetitions: int8): tuple =
+  ## Keyboard Keys W,Space and Mouse Left Click (in games, forward+jump+hit).
   for i in 0..repetitions:
     result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 32; xdo key_release -k 32; xdo button_press -k 1; xdo button_release -k 1")
 
 proc xdo_key_wasd_random*(repetitions: int8): tuple =
+  ## Keyboard Keys W,A,S,D,space Randomly as fast as possible.
   for i in 0..repetitions:
     var kycds = [87, 65, 83, 68, 32].rand
     result = execCmdEx(fmt"xdo key_press -k {kycds}; xdo key_release -k {kycds}")
 
 proc xdo_key_w_e*(repetitions: int8): tuple =
+  ## Keyboard Keys W,E as fast as possible (in games, forward+use).
   for i in 0..repetitions:
     result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 69; xdo key_release -k 69")
 
 proc xdo_key_numbers_click*(repetitions: int8): tuple =
+  ## This function types the keys like: 1,10clicks,2,10clicks,3,10clicks,etc up to 9 (in games, shoot weapons 1 to 9).
   for repeat in 0..repetitions:
     for i in 49..57:
       discard execCmdEx(fmt"xdo key_press -k {i}; xdo key_release -k {i}")
