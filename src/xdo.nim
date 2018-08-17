@@ -1,6 +1,6 @@
 import osproc, strformat, strutils, terminal, random, json
 
-const xdo_version* = staticExec("xdo -v")  ## XDo Version (SemVer).
+const xdo_version* = staticExec("xdo -v")  ## XDo Version (SemVer) when compiled.
 
 let
   keycode2char* = %* {
