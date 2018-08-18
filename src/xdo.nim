@@ -1,4 +1,4 @@
-import osproc, strformat, strutils, terminal, random, json
+import os, osproc, ospaths, strformat, strutils, terminal, random, json, times
 
 const xdo_version* = staticExec("xdo -v")  ## XDo Version (SemVer) when compiled.
 
@@ -529,23 +529,23 @@ proc xdo_key_numbers_click*(repetitions: int8): tuple =
 
 proc xdo_type*(letter: char): tuple =
   ## Type a single letter using keyboard keys from char argument.
-  let keycodez = char2keycode[$letter].getStr()
+  let keycodez = char2keycode[$letter].getInt
   execCmdEx(fmt"xdo key_press -k {keycodez}; xdo key_release -k {keycodez}")
 
-
-discard """
 proc xdo_type_temp_dir*(): tuple =
   ## Type the system temporary directory full path using keyboard keys.
-  execCmdEx(fmt"")
+  for letter in getTempDir():
+    result = xdo_type(letter)
 
 proc xdo_type_current_dir*(): tuple =
   ## Type the current working directory full path using keyboard keys.
-  execCmdEx(fmt"")
+  for letter in getCurrentDir():
+    result = xdo_type(letter)
 
-proc xdo_type_datetime*(): tuple =
-  ## Type the current Date & Time (ISO-Format) using keyboard keys.
-  execCmdEx(fmt"")
-"""
+# proc xdo_type_datetime*(): tuple =
+#   ## Type the current Date & Time (ISO-Format) using keyboard keys.
+#   for letter in $now():
+#     result = xdo_type(letter)
 
 
 when is_main_module and defined(linux):
@@ -559,15 +559,18 @@ when is_main_module and defined(linux):
   echo xdo_move_mouse_terminal_size()
   echo xdo_move_mouse_top_100px(2)
   echo xdo_mouse_move_alternating((x: 9, y: 5), 3)
-  echo xdo_key_0()
-  echo xdo_key_1()
-  echo xdo_key_2()
-  echo xdo_key_3()
-  echo xdo_key_4()
-  echo xdo_key_5()
-  echo xdo_key_6()
-  echo xdo_key_7()
-  echo xdo_key_8()
-  echo xdo_key_9()
+  echo xdo_type('a')
+  echo xdo_type_current_dir()
+  echo xdo_type_temp_dir()
+  # echo xdo_key_0()
+  # echo xdo_key_1()
+  # echo xdo_key_2()
+  # echo xdo_key_3()
+  # echo xdo_key_4()
+  # echo xdo_key_5()
+  # echo xdo_key_6()
+  # echo xdo_key_7()
+  # echo xdo_key_8()
+  # echo xdo_key_9()
   # echo xdo_hide_all_but_focused_window()
   # echo xdo_hide_focused_window()
