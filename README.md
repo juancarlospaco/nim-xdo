@@ -123,6 +123,7 @@ xdo_key_7()       # Keyboard Key 7.
 xdo_key_8()       # Keyboard Key 8.
 xdo_key_9()       # Keyboard Key 9.
 
+# This Procs are oriented to multipurpose automation, scripting, etc.
 xdo_type('a')           # Any letter of Keyboard Keys as char.
 xdo_type_temp_dir()     # Type the system temporary directory full path using keyboard keys.
 xdo_type_current_dir()  # Type the current working directory full path using keyboard keys.
