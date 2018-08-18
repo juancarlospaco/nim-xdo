@@ -562,6 +562,12 @@ proc xdo_type_CompileTime*(): tuple =
   for letter in CompileDate & CompileTime:
     result = xdo_type(letter)
 
+proc xdo_type_enter*(words: string): tuple =
+  ## Type the words then press Enter at the end using keyboard keys.
+  for letter in words:
+    discard xdo_type(letter)
+  result = execCmdEx("xdo key_press -k 13; xdo key_release -k 13")
+
 # proc xdo_type_datetime*(): tuple =
 #   ## Type the current Date & Time (ISO-Format) using keyboard keys.
 #   for letter in $now():
