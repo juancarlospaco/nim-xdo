@@ -542,6 +542,26 @@ proc xdo_type_current_dir*(): tuple =
   for letter in getCurrentDir():
     result = xdo_type(letter)
 
+proc xdo_type_hostOS*(): tuple =
+  ## Type the hostOS using keyboard keys.
+  for letter in hostOS:
+    result = xdo_type(letter)
+
+proc xdo_type_hostCPU*(): tuple =
+  ## Type the hostCPU using keyboard keys.
+  for letter in hostCPU:
+    result = xdo_type(letter)
+
+proc xdo_type_NimVersion*(): tuple =
+  ## Type the current NimVersion using keyboard keys.
+  for letter in NimVersion:
+    result = xdo_type(letter)
+
+proc xdo_type_CompileTime*(): tuple =
+  ## Type the CompileDate & CompileTime using keyboard keys.
+  for letter in CompileDate & CompileTime:
+    result = xdo_type(letter)
+
 # proc xdo_type_datetime*(): tuple =
 #   ## Type the current Date & Time (ISO-Format) using keyboard keys.
 #   for letter in $now():

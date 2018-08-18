@@ -126,6 +126,10 @@ xdo_key_9()       # Keyboard Key 9.
 xdo_type('a')          # Any letter of Keyboard Keys as char.
 xdo_type_temp_dir()    # Type the system temporary directory full path using keyboard keys.
 xdo_type_current_dir() # Type the current working directory full path using keyboard keys.
+xdo_type_hostOS()      # Type the hostOS using keyboard keys.
+xdo_type_hostCPU()     # Type the hostCPU using keyboard keys.
+xdo_type_NimVersion()  # Type the current NimVersion using keyboard keys.
+xdo_type_CompileTime() # Type the CompileDate & CompileTime using keyboard keys.
 
 # This Procs are oriented to Gaming, Game Bots, Game Macros, Game Automation, Streamers, etc.
 xdo_key_wasd(10)         # Keyboard Keys W,A,S,D as fast as possible (in games,make circles).
