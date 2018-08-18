@@ -10,11 +10,6 @@ Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control 
 - `nimble install xdo`
 
 
-# Requirements
-
-- [XDo](https://github.com/baskerville/xdo#xdo1) *(20 Kilobytes pure C lib with no dependencies)*
-
-
 # Use
 
 <details open >
@@ -126,8 +121,9 @@ xdo_key_7()       # Keyboard Key 7.
 xdo_key_8()       # Keyboard Key 8.
 xdo_key_9()       # Keyboard Key 9.
 
-# This Procs are oriented to multipurpose automation, scripting, etc.
 xdo_type('a')           # Any letter of Keyboard Keys as char.
+
+# This Procs are oriented to multipurpose automation, scripting, etc.
 xdo_type_temp_dir()     # Type the system temporary directory full path using keyboard keys.
 xdo_type_current_dir()  # Type the current working directory full path using keyboard keys.
 xdo_type_hostOS()       # Type the hostOS using keyboard keys.
@@ -158,3 +154,8 @@ Theres 2 JSON `keycode2char` and `char2keycode` to convert KeyCodes integers to/
 - Run `nim doc xdo.nim` for more documentation.
 - Run the module itself for an Example.
 - [Nim GUI Automation on Windows OS.](https://nimble.directory/pkg/autome)
+
+
+# Requirements
+
+- [XDo](https://github.com/baskerville/xdo#xdo1) *(20 Kilobytes pure C lib with no dependencies)*
