@@ -17,8 +17,11 @@ Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control 
 
 # Use
 
+<details open >
+
 ```nim
 import xdo
+
 echo xdo_version # XDo Version (SemVer) when compiled.
 xdo_get_id()     # Get current focused window ID.
 xdo_get_pid()    # Get current focused window PID.
@@ -145,6 +148,8 @@ xdo_key_numbers_click(9) # 1,10clicks,2,10clicks,3,10clicks,etc up to 9 (in game
 
 # xdo() is also available as a very low level wrapper for XDo for advanced developers.
 ```
+
+</details>
 
 Theres 2 JSON `keycode2char` and `char2keycode` to convert KeyCodes integers to/from Characters strings (human readable keyboard keys).
 
