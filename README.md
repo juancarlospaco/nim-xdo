@@ -83,16 +83,21 @@ xdo_key_mycalculator() # Keyboard Key My Calculator (HotKey thingy).
 xdo_key_windows()      # Keyboard Key Windows (AKA Meta Key).
 xdo_key_rightclick()   # Keyboard Key Right Click (HotKey thingy).
 
-xdo_key_numpad0() # Keyboard Key Numeric Pad 0.
-xdo_key_numpad1() # Keyboard Key Numeric Pad 1.
-xdo_key_numpad2() # Keyboard Key Numeric Pad 2.
-xdo_key_numpad3() # Keyboard Key Numeric Pad 3.
-xdo_key_numpad4() # Keyboard Key Numeric Pad 4.
-xdo_key_numpad5() # Keyboard Key Numeric Pad 5.
-xdo_key_numpad6() # Keyboard Key Numeric Pad 6.
-xdo_key_numpad7() # Keyboard Key Numeric Pad 7.
-xdo_key_numpad8() # Keyboard Key Numeric Pad 8.
-xdo_key_numpad9() # Keyboard Key Numeric Pad 9.
+xdo_key_numpad0()         # Keyboard Key Numeric Pad 0.
+xdo_key_numpad1()         # Keyboard Key Numeric Pad 1.
+xdo_key_numpad2()         # Keyboard Key Numeric Pad 2.
+xdo_key_numpad3()         # Keyboard Key Numeric Pad 3.
+xdo_key_numpad4()         # Keyboard Key Numeric Pad 4.
+xdo_key_numpad5()         # Keyboard Key Numeric Pad 5.
+xdo_key_numpad6()         # Keyboard Key Numeric Pad 6.
+xdo_key_numpad7()         # Keyboard Key Numeric Pad 7.
+xdo_key_numpad8()         # Keyboard Key Numeric Pad 8.
+xdo_key_numpad9()         # Keyboard Key Numeric Pad 9.
+xdo_key_numpad_asterisk() # Keyboard Key Numeric Pad "*".
+xdo_key_numpad_plus()     # Keyboard Key Numeric Pad "+".
+xdo_key_numpad_minus()    # Keyboard Key Numeric Pad "-".
+xdo_key_numpad_dot()      # Keyboard Key Numeric Pad ".".
+xdo_key_numpad_slash()    # Keyboard Key Numeric Pad "/".
 
 xdo_key_f1()      # Keyboard Key F1.
 xdo_key_f2()      # Keyboard Key F2.
