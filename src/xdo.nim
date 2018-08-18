@@ -1,9 +1,14 @@
-import os, osproc, ospaths, strformat, strutils, terminal, random, json, times
+import os, osproc, ospaths, strformat, strutils, terminal, random, json, times, tables
 
-const xdo_version* = staticExec("xdo -v")  ## XDo Version (SemVer) when compiled.
-
-let
-  keycode2char* = %* {
+const
+  xdo_version* = staticExec("xdo -v")  ## XDo Version (SemVer) when compiled.
+  char2keycode* = {
+    "0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,
+    "a":65,"b":66,"c":67,"d":68,"e":69,"f":70,"g":71,"h":72,"i":73,"j":74,"k":75,"l":76,"m":77,
+    "n":78,"o":79,"p":80,"q":81,"r":82,"s":83,"t":84,"u":85,"v":86,"w":87,"x":88,"y":89,"z":90,
+    " ":32,";":186,"=":187,",":188,"-":189,".":190,"/":191,"`":192,"[":219,"\\":220,"]":221,"'":222
+  }.toTable  ## Statically compiled JSON that maps Keys strings Versus KeyCodes integers.
+  keycode2char* = {
     "8":"backspace","9":"tab","13":"enter","16":"shift","17":"ctrl","18":"alt",
     "19":"pause/break","20":"caps lock","27":"esc","32":"space","33":"page up",
     "34":"page down","35":"end","36":"home","37":"left","38":"up","39":"right",
@@ -21,13 +26,7 @@ let
     "144":"num lock","145":"scroll lock","182":"my computer",
     "183":"my calculator","186":";","187":"=","188":",","189":"-","190":".",
     "191":"/","192":"`","219":"[","220":"\\","221":"]","222":"'"
-  }  ## Statically compiled JSON that maps KeyCodes integers Versus Keys strings.
-  char2keycode* = %* {
-    "0":48,"1":49,"2":50,"3":51,"4":52,"5":53,"6":54,"7":55,"8":56,"9":57,
-    "a":65,"b":66,"c":67,"d":68,"e":69,"f":70,"g":71,"h":72,"i":73,"j":74,"k":75,"l":76,"m":77,
-    "n":78,"o":79,"p":80,"q":81,"r":82,"s":83,"t":84,"u":85,"v":86,"w":87,"x":88,"y":89,"z":90,
-    " ":32,";":186,"=":187,",":188,"-":189,".":190,"/":191,"`":192,"[":219,"\\":220,"]":221,"'":222
-  }  ## Statically compiled JSON that maps Keys strings Versus KeyCodes integers.
+  }.toTable  ## Statically compiled JSON that maps KeyCodes integers Versus Keys strings.
 
 type
   Actions* {.pure.} = enum             ## All Actions.
@@ -529,7 +528,7 @@ proc xdo_key_numbers_click*(repetitions: int8): tuple =
 
 proc xdo_type*(letter: char): tuple =
   ## Type a single letter using keyboard keys from char argument.
-  let keycodez = char2keycode[$letter].getInt
+  let keycodez = char2keycode[$letter]
   execCmdEx(fmt"xdo key_press -k {keycodez}; xdo key_release -k {keycodez}")
 
 proc xdo_type_temp_dir*(): tuple =
