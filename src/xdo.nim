@@ -375,23 +375,23 @@ proc xdo_key_numpad9*(): tuple =
   execCmdEx("xdo key_press -k 105; xdo key_release -k 105")
 
 proc xdo_key_numpad_asterisk*(): tuple =
-  ## Keyboard Key Numeric Pad *.
+  ## Keyboard Key Numeric Pad ``*``.
   execCmdEx("xdo key_press -k 106; xdo key_release -k 106")
 
 proc xdo_key_numpad_plus*(): tuple =
-  ## Keyboard Key Numeric Pad +.
+  ## Keyboard Key Numeric Pad ``+``.
   execCmdEx("xdo key_press -k 107; xdo key_release -k 107")
 
 proc xdo_key_numpad_minus*(): tuple =
-  ## Keyboard Key Numeric Pad -.
+  ## Keyboard Key Numeric Pad ``-``.
   execCmdEx("xdo key_press -k 109; xdo key_release -k 109")
 
 proc xdo_key_numpad_dot*(): tuple =
-  ## Keyboard Key Numeric Pad ".".
+  ## Keyboard Key Numeric Pad ``.``.
   execCmdEx("xdo key_press -k 110; xdo key_release -k 110")
 
 proc xdo_key_numpad_slash*(): tuple =
-  ## Keyboard Key Numeric Pad /.
+  ## Keyboard Key Numeric Pad ``/``.
   execCmdEx("xdo key_press -k 111; xdo key_release -k 111")
 
 proc xdo_key_f1*(): tuple =
