@@ -28,8 +28,8 @@ const
     "191":"/","192":"`","219":"[","220":"\\","221":"]","222":"'"
   }.toTable  ## Statically compiled JSON that maps KeyCodes integers Versus Keys strings.
 
-type
-  Actions* {.pure.} = enum             ## All Actions.
+types
+  Actions*         = enum             ## All Actions.
     close          = "close"           ## Close the window.
     kill           = "kill"            ## Kill the client.
     hide           = "hide"            ## Unmap the window.
@@ -139,6 +139,8 @@ proc xdo_move_window_random*(pid: int, maxx = 1024, maxy = 768): tuple =
   ## Move Window to Random positions.
   execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
 
+
+
 proc xdo_move_mouse_terminal_size*(): tuple =
   ## Move mouse to the detected current Terminal Size.
   execCmdEx(fmt"xdo pointer_motion -x {terminalWidth()} -y {terminalHeight()}")
@@ -169,7 +171,7 @@ proc xdo_mouse_move_alternating*(move: tuple[x: int, y: int], repetitions: int8)
   for i in 0..repetitions:
     xx = if i mod 2 == 0: "+" else: "-" & $move.x
     yy = if i mod 2 == 0: "+" else: "-" & $move.y
-    result = execCmdEx(fmt"xdo pointer_motion -x {xx} -y {yy}")
+    result = execCmdEx(fmt"xdo pointer_motion -x {xx} -y {yy}") # TODO: foo
 
 proc xdo_mouse_left_click*(): tuple =
   ## Mouse Left Click.
@@ -573,29 +575,33 @@ proc xdo_type_enter*(words: string): tuple =
 #     result = xdo_type(letter)
 
 
-when is_main_module and defined(linux):
-  echo xdo_version
-  echo xdo_get_id()
-  echo xdo_get_pid()
-  echo xdo_move_mouse_random()
-  echo xdo_move_mouse_top_left()
-  echo xdo_move_mouse((x: "+99", y: "+99"))
-  echo xdo_move_mouse_left_100px(2)
-  echo xdo_move_mouse_terminal_size()
-  echo xdo_move_mouse_top_100px(2)
-  echo xdo_mouse_move_alternating((x: 9, y: 5), 3)
-  echo xdo_type('a')
-  echo xdo_type_current_dir()
-  echo xdo_type_temp_dir()
-  # echo xdo_key_0()
-  # echo xdo_key_1()
-  # echo xdo_key_2()
-  # echo xdo_key_3()
-  # echo xdo_key_4()
-  # echo xdo_key_5()
-  # echo xdo_key_6()
-  # echo xdo_key_7()
-  # echo xdo_key_8()
-  # echo xdo_key_9()
-  # echo xdo_hide_all_but_focused_window()
-  # echo xdo_hide_focused_window()
+runnableExamples:
+  ## XDo works on Linux OS.
+  when defined(linux):
+    ## Basic example of mouse and keyboard control from code.
+    import os, osproc, ospaths, strformat, strutils, terminal, random, json, times, tables
+    echo xdo_version
+    echo xdo_get_id()
+    echo xdo_get_pid()
+    echo xdo_move_mouse_random()
+    echo xdo_move_mouse_top_left()
+    echo xdo_move_mouse((x: "+99", y: "+99"))
+    echo xdo_move_mouse_left_100px(2)
+    echo xdo_move_mouse_terminal_size()
+    echo xdo_move_mouse_top_100px(2)
+    echo xdo_mouse_move_alternating((x: 9, y: 5), 3)
+    echo xdo_type('a')
+    echo xdo_type_current_dir()
+    echo xdo_type_temp_dir()
+    # echo xdo_key_0()
+    # echo xdo_key_1()
+    # echo xdo_key_2()
+    # echo xdo_key_3()
+    # echo xdo_key_4()
+    # echo xdo_key_5()
+    # echo xdo_key_6()
+    # echo xdo_key_7()
+    # echo xdo_key_8()
+    # echo xdo_key_9()
+    # echo xdo_hide_all_but_focused_window()
+    # echo xdo_hide_focused_window()
