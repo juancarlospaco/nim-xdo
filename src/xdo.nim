@@ -1,5 +1,10 @@
-import os, osproc, ospaths, strformat, strutils, terminal, random, json, times, tables
+## Nim-Xdo
+## =======
+##
+## - Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control from Nim code, procs for common actions.
+# Ideally Xdo can be ported to pure Nim someday, since is 1 C file, meanwhile this is a wrapper.
 
+import os, osproc, ospaths, strformat, strutils, terminal, random, json, times, tables
 
 const
   xdo_version* = staticExec("xdo -v")  ## XDo Version (SemVer) when compiled.
@@ -32,33 +37,34 @@ const
     "183":"my calculator","186":";","187":"=","188":",","189":"-","190":".",
     "191":"/","192":"`","219":"[","220":"\\","221":"]","222":"'"
   }.toTable  ## Statically compiled JSON that maps KeyCodes integers Versus Keys strings.
-
-type
-  Actions*         = enum             ## All Actions.
-    close          = "close"           ## Close the window.
-    kill           = "kill"            ## Kill the client.
-    hide           = "hide"            ## Unmap the window.
-    show           = "show"            ## Map the window.
-    raize          = "raise"           ## Raise the window.
-    lower          = "lower"           ## Lower the window.
-    below          = "below"           ## Put the window below the target.
-    above          = "above"           ## Put the window above the target.
-    move           = "move"            ## Move the window.
-    resize         = "resize"          ## Resize the window.
-    activate       = "activate"        ## Activate the window.
-    id             = "id"              ## Print the window’s ID.
-    pid            = "pid"             ## Print the window PID.
-    key_press      = "key_press"       ## Simulate a key press event.
-    key_release    = "key_release"     ## Simulate a key release event.
-    button_press   = "button_press"    ## Simulate a button press event.
-    button_release = "button_release"  ## Simulate a button release event.
-    pointer_motion = "pointer_motion"  ## Simulate a pointer motion event.
+  valid_actions* = [
+   "close",           ## Close the window.
+    "kill",           ## Kill the client.
+    "hide",           ## Unmap the window.
+    "show",           ## Map the window.
+    "raise",          ## Raise the window.
+    "lower",          ## Lower the window.
+    "below",          ## Put the window below the target.
+    "above",          ## Put the window above the target.
+    "move",           ## Move the window.
+    "resize",         ## Resize the window.
+    "activate",       ## Activate the window.
+    "id",             ## Print the window’s ID.
+    "pid",            ## Print the window PID.
+    "key_press",      ## Simulate a key press event.
+    "key_release",    ## Simulate a key release event.
+    "button_press",   ## Simulate a button press event.
+    "button_release", ## Simulate a button release event.
+    "pointer_motion", ## Simulate a pointer motion event.
+  ]  ## Static list of all XDo Valid Actions as strings.
 randomize()
 
-proc xdo*(action: Actions, move: tuple[x: string, y: string] = (x: "0", y: "0"),
+
+proc xdo*(action: string, move: tuple[x: string, y: string] = (x: "0", y: "0"),
           instance_name = "", class_name = "", wm_name = "", pid = 0,
           wait4window = false, same_desktop = true, same_class = true, same_id = true): tuple =
   ## XDo proc is a very low level wrapper for XDo for advanced developers, almost all arguments are supported.
+  assert action in valid_actions, fmt"Invalid argument for Action, got {action} must be one of {valid_actions}"
   let
     a = if wait4window: "m" else: ""
     b = if same_id: "" else: "r"
