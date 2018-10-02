@@ -28,7 +28,7 @@ const
     "191":"/","192":"`","219":"[","220":"\\","221":"]","222":"'"
   }.toTable  ## Statically compiled JSON that maps KeyCodes integers Versus Keys strings.
 
-types
+type
   Actions*         = enum             ## All Actions.
     close          = "close"           ## Close the window.
     kill           = "kill"            ## Kill the client.
