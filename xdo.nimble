@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "0.2.0"
 author        = "Juan Carlos"
 description   = "Nim GUI Automation Linux, simulate user interaction, mouse and keyboard."
 license       = "MIT"
