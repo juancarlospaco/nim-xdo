@@ -144,8 +144,6 @@ proc xdo_move_window_random*(pid: int, maxx = 1024, maxy = 768): tuple =
   ## Move Window to Random positions.
   execCmdEx(fmt"xdo move -x {maxx.rand} -y {maxy.rand} -p {pid}")
 
-
-
 proc xdo_move_mouse_terminal_size*(): tuple =
   ## Move mouse to the detected current Terminal Size.
   execCmdEx(fmt"xdo pointer_motion -x {terminalWidth()} -y {terminalHeight()}")
