@@ -1,14 +1,44 @@
 # nim-xdo
 
-Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control from Nim code, procs for common actions.
+Nim XDO is a GUI Automation Wrapper for Linux to simulate user interaction, mouse and keyboard control from Nim code, procs for common actions.
 
 ![Keyboard](https://raw.githubusercontent.com/juancarlospaco/nim-xdo/master/keyboard_kitten.jpg "Keyboard typing simulation for everyone")
 
 
-# install
+# Install
 
-- `nimble install xdo`
+## Requirements
 
+You need to install [xdo]() before using `nim-xdo`.
+
+The [`check_deps.sh`](./check_deps.sh) script will run to check if you have [xdo]() installed and help you install it. The script runs at `nimble install` automatically.
+
+If you want to install it manually, do:
+
+```bash 
+# clone xdo locally
+git clone -q https://github.com/baskerville/xdo
+cd xdo # go into dir
+make
+sudo make install
+
+# cleanup
+cd ..; rm -rf xdo
+```
+
+## There are two ways of installing **nim-xdo**
+
+### From nimble
+```bash
+nimble install xdo
+```
+
+### From github
+```bash
+git clone https://github.com/baskerville/xdo.git
+cd xdo
+nimble install
+```
 
 # Use
 
