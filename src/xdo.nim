@@ -1,5 +1,13 @@
 import os, osproc, ospaths, strformat, strutils, terminal, random, json, times, tables
 
+# Check if the xdo dep is met
+if hostOS != "linux":
+  echo "ERR: xdo is only available for the Linux platform."
+  quit(1)
+
+if not xdo_exists:
+  echo "ERR: could not find xdo..."
+  install_xdo()
 
 const
   xdo_version* = staticExec("xdo -v")  ## XDo Version (SemVer) when compiled.
