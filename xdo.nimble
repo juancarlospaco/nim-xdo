@@ -9,3 +9,10 @@ srcDir        = "src"
 # Dependencies
 
 requires "nim >= 0.19.0"
+
+before install:
+  try:
+    exec "sh ./check_deps.sh"
+  except:
+    echo "xdo not found. Aborting..."
+    quit()
