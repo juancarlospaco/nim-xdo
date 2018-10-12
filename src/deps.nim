@@ -1,5 +1,5 @@
 from os import execShellCmd
-from strutils import strip, toLower
+from strutils import strip, toLowerAscii
 
 template run(cmd) =
   try:
@@ -30,8 +30,8 @@ let curr_distro =
 
 proc install_xdo* =
   write(stdout, "Do you want to install xdo? (y/n) ")
-  
-  let input = readLine(stdin).strip.toLower
+
+  let input = readLine(stdin).strip.toLowerAscii
   if input.contains "n":
     quit(1)
 
@@ -55,4 +55,3 @@ proc install_xdo* =
       install = clone_repo & enter_dir & make_install & cleanup
 
   run(install)
-
