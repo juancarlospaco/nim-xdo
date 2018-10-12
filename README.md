@@ -5,19 +5,17 @@ Nim XDO is a GUI Automation Wrapper for Linux to simulate user interaction, mous
 ![Keyboard](https://raw.githubusercontent.com/juancarlospaco/nim-xdo/master/keyboard_kitten.jpg "Keyboard typing simulation for everyone")
 
 
-# Install
+# Requirements
 
-## Requirements
+You need to install [xdo](https://github.com/baskerville/xdo) before using `nim-xdo`.
 
-You need to install [xdo]() before using `nim-xdo`.
-
-The [`check_deps.sh`](./check_deps.sh) script will run to check if you have [xdo]() installed and help you install it. The script runs at `nimble install` automatically.
+The [`check_deps.sh`](./check_deps.sh) script will run to check if you have [xdo](https://github.com/baskerville/xdo) installed and help you install it.
+The script runs at `nimble install` automatically.
 
 If you want to install it manually, do:
 
-```bash 
-# clone xdo locally
-git clone -q https://github.com/baskerville/xdo
+```bash
+git clone https://github.com/baskerville/xdo
 cd xdo # go into dir
 make
 sudo make install
@@ -26,19 +24,26 @@ sudo make install
 cd ..; rm -rf xdo
 ```
 
-## There are two ways of installing **nim-xdo**
 
-### From nimble
+## Install
+
+- There are two ways of installing **nim-xdo**
+
+### From Nimble
+*(recommended)*
+
 ```bash
 nimble install xdo
 ```
 
-### From github
+### From Github
+
 ```bash
-git clone https://github.com/baskerville/xdo.git
+git clone https://github.com/juancarlospaco/nim-xdo.git
 cd xdo
 nimble install
 ```
+
 
 # Use
 
@@ -186,6 +191,6 @@ Theres 2 JSON `keycode2char` and `char2keycode` to convert KeyCodes integers to/
 - [Nim GUI Automation on Windows OS.](https://nimble.directory/pkg/autome)
 
 
-# Requirements
+# Dependencies
 
 - [XDo](https://github.com/baskerville/xdo#xdo1) *(20 Kilobytes pure C lib with no dependencies)*
