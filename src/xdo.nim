@@ -2,18 +2,17 @@
 ## =======
 ##
 ## - Nim GUI Automation Linux, simulate user interaction, mouse and keyboard control from Nim code, procs for common actions.
+##
+## .. image:: https://raw.githubusercontent.com/juancarlospaco/nim-xdo/master/keyboard_kitten.jpg
 # Ideally Xdo can be ported to pure Nim someday, since is 1 C file, meanwhile this is a wrapper.
 
 import os, osproc, ospaths, strformat, strutils, terminal, random, json, times, tables
 
-# Check if the xdo dep is met
-if hostOS != "linux":
-  echo "ERR: xdo is only available for the Linux platform."
-  quit(1)
+when not defined(linux): quit("ERROR: XDo is only available for Linux.") # Check if the xdo dep is met
 
-if not xdo_exists:
-  echo "ERR: could not find xdo..."
-  install_xdo()
+# if not xdo_exists:
+#   echo "ERR: could not find xdo..."
+#   install_xdo()
 
 const
   xdo_version* = staticExec("xdo -v")  ## XDo Version (SemVer) when compiled.
