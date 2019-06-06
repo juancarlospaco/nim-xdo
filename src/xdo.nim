@@ -6,7 +6,7 @@
 ## .. image:: https://raw.githubusercontent.com/juancarlospaco/nim-xdo/master/keyboard_kitten.jpg
 # Ideally Xdo can be ported to pure Nim someday, since is 1 C file, meanwhile this is a wrapper.
 
-import os, osproc, ospaths, strformat, strutils, terminal, random, json, times, tables
+import os, osproc, strformat, strutils, terminal, random, json, times, tables
 
 when not defined(linux): quit("ERROR: XDo is only available for Linux.") # Check if the xdo dep is met
 
