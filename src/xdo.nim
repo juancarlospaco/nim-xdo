@@ -59,26 +59,25 @@ const
     "button_release", ## Simulate a button release event.
     "pointer_motion", ## Simulate a pointer motion event.
   ]  ## Static list of all XDo Valid Actions as strings.
-randomize()
 
 
-proc xdo*(action: string, move: tuple[x: string, y: string] = (x: "0", y: "0"),
+template xdo*(action: string, move: tuple[x: string, y: string] = (x: "0", y: "0"),
           instance_name = "", class_name = "", wm_name = "", pid = 0,
           wait4window = false, same_desktop = true, same_class = true, same_id = true): tuple[output: TaintedString, exitCode: int] =
   ## XDo proc is a very low level wrapper for XDo for advanced developers, almost all arguments are supported.
   assert action in valid_actions, "Invalid argument for Action, must be one of " & $valid_actions
-  let
-    a = if wait4window: "m" else: ""
-    b = if same_id: "" else: "r"
-    c = if same_desktop: 'd' else: 'D'
-    d = if same_class: 'c' else: 'C'
-    e = if instance_name != "": " -n " & $instance_name & " " else: ""
-    f = if class_name != "": " -N " & $class_name & " " else: ""
-    g = if wm_name != "": " -a " & $wm_name & " " else: ""
-    h = if pid != 0: " -p " & $pid & " " else: ""
-    i = if move != ("0", "0"): " -x " & $move.x & " -y " & $move.y & " " else: ""
-    cmd = "xdo " & action & " -" & a & b & c & d & e & f & g & h & i
-  execCmdEx(cmd)
+  execCmdEx((
+    "xdo " & action & " -" &
+    (if wait4window: "m" else: "") &
+    (if same_id: "" else: "r") &
+    (if same_desktop: 'd' else: 'D') &
+    (if same_class: 'c' else: 'C') &
+    (if instance_name != "": " -n " & $instance_name & " " else: "") &
+    (if class_name != "": " -N " & $class_name & " " else: "") &
+    (if wm_name != "": " -a " & $wm_name & " " else: "") &
+    (if pid != 0: " -p " & $pid & " " else: "") &
+    (if move != ("0", "0"): " -x " & $move.x & " -y " & $move.y & " " else: "") & ";"
+  ))
 
 template xdo_move_mouse*(move: tuple[x: string, y: string]): tuple[output: TaintedString, exitCode: int] =
   ## Move mouse to move position pixel coordinates (X, Y).
@@ -140,27 +139,26 @@ template xdo_move_mouse_top_left*(): tuple[output: TaintedString, exitCode: int]
   ## Move mouse to Top Left limits (X=0, Y=0).
   execCmdEx("xdo pointer_motion -x 0 -y 0")
 
-proc xdo_move_mouse_random*(maxx = 1024, maxy = 768, repetitions: int8 = 0): tuple[output: TaintedString, exitCode: int] =
+proc xdo_move_mouse_random*(maxx = 1024, maxy = 768, repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Move mouse to Random positions, repeat 0 to repetitions times.
-  if repetitions != 0:
-    for i in 0..repetitions:
-      result = execCmdEx("xdo pointer_motion -x " & $rand(maxx) & " -y " & $rand(maxy))
-  else:
-    result = execCmdEx("xdo pointer_motion -x " & $rand(maxx) & " -y " & $rand(maxy))
+  let cmd = create(string, sizeOf string)
+  for i in 0..repetitions: cmd[].add "xdo pointer_motion -x " & $rand(maxx) & " -y " & $rand(maxy)
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 template xdo_move_window_random*(pid: Positive, maxx = 1024, maxy = 768): tuple[output: TaintedString, exitCode: int] =
   ## Move Window to Random positions.
   execCmdEx("xdo move -x " & $maxx.rand & " -y " & $maxy.rand & " -p " & $pid)
 
-proc xdo_move_mouse_top_100px*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+proc xdo_move_mouse_top_100px*(repetitions: Positive): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Move mouse to Top Y=0, then repeat move Bottom on jumps of 100px each.
-  result = execCmdEx("xdo pointer_motion -y 0")
-  for i in 0..repetitions: result = execCmdEx("xdo pointer_motion -y +100")
+  if likely(execCmdEx("xdo pointer_motion -y 0").exitCode == 0):
+    result = execCmdEx("xdo pointer_motion -y +100;".repeat(repetitions))
 
-proc xdo_move_mouse_left_100px*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+proc xdo_move_mouse_left_100px*(repetitions: Positive): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Move mouse to Left X=0, then repeat move Right on jumps of 100px each.
-  result = execCmdEx("xdo pointer_motion -x 0")
-  for i in 0..repetitions: result = execCmdEx("xdo pointer_motion -x +100")
+  if likely(execCmdEx("xdo pointer_motion -x 0").exitCode == 0):
+    result = execCmdEx("xdo pointer_motion -x +100;".repeat(repetitions))
 
 template xdo_get_pid*(): string =
   ## Get PID of a window, integer type.
@@ -170,13 +168,13 @@ template xdo_get_id*(): string =
   ## Get ID of a window, integer type.
   execCmdEx("xdo id").output.strip
 
-proc xdo_mouse_move_alternating*(move: tuple[x: int, y: int], repetitions: int8): tuple[output: TaintedString, exitCode: int] =
+proc xdo_mouse_move_alternating*(move: tuple[x: int, y: int], repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Move mouse alternating to Left/Right Up/Down, AKA Zig-Zag movements.
-  var xx, yy: string
+  let cmd = create(string, sizeOf string)
   for i in 0..repetitions:
-    xx = if i mod 2 == 0: "+" else: "-" & $move.x
-    yy = if i mod 2 == 0: "+" else: "-" & $move.y
-    result = execCmdEx("xdo pointer_motion -x " & $xx & " -y " & $yy)
+    cmd[].add "xdo pointer_motion -x " & $(if i mod 2 == 0: "+" else: "-" & $move.x) & " -y " & $(if i mod 2 == 0: "+" else: "-" & $move.y)
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 template xdo_mouse_left_click*(): tuple[output: TaintedString, exitCode: int] =
   ## Mouse Left Click.
@@ -214,25 +212,25 @@ template xdo_mouse_triple_right_click*(): tuple[output: TaintedString, exitCode:
   ## Mouse Triple Right Click.
   execCmdEx("xdo button_press -k 3; xdo button_release -k 3; xdo button_press -k 3; xdo button_release -k 3; xdo button_press -k 3; xdo button_release -k 3")
 
-proc xdo_mouse_spamm_left_click*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_mouse_spamm_left_click*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Spamm Mouse Left Click as fast as possible.
-  for i in 0..repetitions: result = execCmdEx("xdo button_press -k 1; xdo button_release -k 1")
+  execCmdEx("xdo button_press -k 1;xdo button_release -k 1;".repeat(repetitions))
 
-proc xdo_mouse_spamm_middle_click*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_mouse_spamm_middle_click*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Spamm Mouse Middle Click as fast as possible.
-  for i in 0..repetitions: result = execCmdEx("xdo button_press -k 2; xdo button_release -k 2")
+  execCmdEx("xdo button_press -k 2;xdo button_release -k 2;".repeat(repetitions))
 
-proc xdo_mouse_spamm_right_click*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_mouse_spamm_right_click*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Spamm Mouse Right Click as fast as possible.
-  for i in 0..repetitions: result = execCmdEx("xdo button_press -k 3; xdo button_release -k 3")
+  execCmdEx("xdo button_press -k 3;xdo button_release -k 3;".repeat(repetitions))
 
 template xdo_mouse_swipe_horizontal*(x: string): tuple[output: TaintedString, exitCode: int] =
   ## Mouse Swipe to Left or Right, Hold Left Click+Drag Horizontally+Release Left Click.
-  execCmdEx("xdo button_press -k 1; xdo pointer_motion -x {x}; xdo button_release -k 1")
+  execCmdEx("xdo button_press -k 1;xdo pointer_motion -x " & $x & ";xdo button_release -k 1")
 
 template xdo_mouse_swipe_vertical*(y: string): tuple[output: TaintedString, exitCode: int] =
   ## Mouse Swipe to Up or Down, Hold Left Click+Drag Vertically+Release Left Click.
-  execCmdEx("xdo button_press -k 1; xdo pointer_motion -y {y}; xdo button_release -k 1")
+  execCmdEx("xdo button_press -k 1;xdo pointer_motion -y " & $y & ";xdo button_release -k 1")
 
 template xdo_key_backspace*(): tuple[output: TaintedString, exitCode: int] =
   ## Keyboard Key Backspace.
@@ -486,48 +484,51 @@ template xdo_key_9*(): tuple[output: TaintedString, exitCode: int] =
   ## Keyboard Key 9.
   execCmdEx("xdo key_press -k 57; xdo key_release -k 57")
 
-proc xdo_key_wasd*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_key_wasd*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Keyboard Keys W,A,S,D as fast as possible (in games,make circles).
-  for i in 0..repetitions: result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 65; xdo key_release -k 65; xdo key_press -k 83; xdo key_release -k 83; xdo key_press -k 68; xdo key_release -k 68")
+  execCmdEx("xdo key_press -k 87;xdo key_release -k 87;xdo key_press -k 65;xdo key_release -k 65;xdo key_press -k 83;xdo key_release -k 83;xdo key_press -k 68;xdo key_release -k 68;".repeat(repetitions))
 
-proc xdo_key_spamm_space*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_key_spamm_space*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Keyboard Key Space as fast as possible (in games,bunny hop).
-  for i in 0..repetitions: result = execCmdEx("xdo key_press -k 32; xdo key_release -k 32")
+  execCmdEx("xdo key_press -k 32;xdo key_release -k 32;".repeat(repetitions))
 
-proc xdo_key_w_click*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_key_w_click*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Keyboard Key W and Mouse Left Click as fast as possible (in games,forward+hit).
-  for i in 0..repetitions: result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo button_press -k 1; xdo button_release -k 1")
+  execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo button_press -k 1; xdo button_release -k 1;".repeat(repetitions))
 
-proc xdo_key_w_space*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_key_w_space*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Keyboard Keys W,Space as fast as possible (in games, forward+jump).
-  for i in 0..repetitions: result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 32; xdo key_release -k 32")
+  execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 32; xdo key_release -k 32;".repeat(repetitions))
 
-proc xdo_key_w_space_click*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_key_w_space_click*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Keyboard Keys W,Space and Mouse Left Click (in games, forward+jump+hit).
-  for i in 0..repetitions: result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 32; xdo key_release -k 32; xdo button_press -k 1; xdo button_release -k 1")
+  execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 32; xdo key_release -k 32; xdo button_press -k 1; xdo button_release -k 1;".repeat(repetitions))
 
-proc xdo_key_wasd_random*(repetitions: int8): tuple[output: TaintedString, exitCode: int] =
+proc xdo_key_wasd_random*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Keyboard Keys W,A,S,D,space Randomly as fast as possible.
+  let cmd = create(string, sizeOf string)
   for i in 0..repetitions:
-    var kycds = [87, 65, 83, 68, 32].rand
-    result = execCmdEx("xdo key_press -k " & $kycds & "; xdo key_release -k " & $kycds)
+    cmd[].add "xdo key_press -k " & $sample([87, 65, 83, 68, 32]) & "; xdo key_release -k " & $sample([87, 65, 83, 68, 32]) & ";"
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
-proc xdo_key_w_e*(repetitions: int8): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_key_w_e*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] =
   ## Keyboard Keys W,E as fast as possible (in games, forward+use).
-  for i in 0..repetitions: result = execCmdEx("xdo key_press -k 87; xdo key_release -k 87; xdo key_press -k 69; xdo key_release -k 69")
+  execCmdEx("xdo key_press -k 87;xdo key_release -k 87;xdo key_press -k 69; xdo key_release -k 69;".repeat(repetitions))
 
-proc xdo_key_numbers_click*(repetitions: int8): tuple[output: TaintedString, exitCode: int] =
+proc xdo_key_numbers_click*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## This function types the keys like: 1,10clicks,2,10clicks,3,10clicks,etc up to 9 (in games, shoot weapons 1 to 9).
+  let cmd = create(string, sizeOf string)
   for repeat in 0..repetitions:
     for i in 49..57:
-      discard execCmdEx("xdo key_press -k " & $i & "; xdo key_release -k " & $i)
-      for x in 0..9:
-        result = execCmdEx("xdo button_press -k 1; xdo button_release -k 1")
+      cmd[].add "xdo key_press -k " & $i & ";xdo key_release -k " & $i & ";"
+      for x in 0..9: cmd[].add "xdo button_press -k 1;xdo button_release -k 1;"
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 template xdo_type*(letter: char): tuple[output: TaintedString, exitCode: int] =
   ## Type a single letter using keyboard keys from char argument.
-  let keycodez = char2keycode[$letter]
-  execCmdEx("xdo key_press -k " & $keycodez & "; xdo key_release -k " & $keycodez)
+  execCmdEx("xdo key_press -k " & $char2keycode[$letter] & "; xdo key_release -k " & $char2keycode[$letter])
 
 proc xdo_type_temp_dir*(): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the system temporary directory full path using keyboard keys.
