@@ -150,15 +150,13 @@ template xdo_move_window_random*(pid: Positive, maxx = 1024, maxy = 768): tuple[
   ## Move Window to Random positions.
   execCmdEx("xdo move -x " & $maxx.rand & " -y " & $maxy.rand & " -p " & $pid)
 
-proc xdo_move_mouse_top_100px*(repetitions: Positive): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_move_mouse_top_100px*(repetitions: Positive): tuple[output: TaintedString, exitCode: int] =
   ## Move mouse to Top Y=0, then repeat move Bottom on jumps of 100px each.
-  if likely(execCmdEx("xdo pointer_motion -y 0").exitCode == 0):
-    result = execCmdEx("xdo pointer_motion -y +100;".repeat(repetitions))
+  execCmdEx("xdo pointer_motion -y 0;" & "xdo pointer_motion -y +100;".repeat(repetitions))
 
-proc xdo_move_mouse_left_100px*(repetitions: Positive): tuple[output: TaintedString, exitCode: int] {.inline.} =
+template xdo_move_mouse_left_100px*(repetitions: Positive): tuple[output: TaintedString, exitCode: int] =
   ## Move mouse to Left X=0, then repeat move Right on jumps of 100px each.
-  if likely(execCmdEx("xdo pointer_motion -x 0").exitCode == 0):
-    result = execCmdEx("xdo pointer_motion -x +100;".repeat(repetitions))
+  execCmdEx("xdo pointer_motion -x 0;" & "xdo pointer_motion -x +100;".repeat(repetitions))
 
 template xdo_get_pid*(): string =
   ## Get PID of a window, integer type.
