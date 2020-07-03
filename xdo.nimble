@@ -3,9 +3,7 @@ author        = "Juan Carlos, Mircea Ilie Ploscaru"
 description   = "Nim GUI Automation Linux, simulate user interaction, mouse and keyboard."
 license       = "MIT"
 srcDir        = "src"
-
-requires "nim >= 1.2.2"
-
+requires "nim >= 1.2.4"
 
 import distros
 

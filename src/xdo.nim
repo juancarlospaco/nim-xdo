@@ -519,10 +519,10 @@ template xdo_key_w_e*(repetitions = 1.Positive): tuple[output: TaintedString, ex
 proc xdo_key_numbers_click*(repetitions = 1.Positive): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## This function types the keys like: 1,10clicks,2,10clicks,3,10clicks,etc up to 9 (in games, shoot weapons 1 to 9).
   let cmd = create(string, sizeOf string)
-  for repeat in 0..repetitions:
+  for _ in 0..repetitions:
     for i in 49..57:
-      cmd[].add "xdo key_press -k " & $i & ";xdo key_release -k " & $i & ";"
-      for x in 0..9: cmd[].add "xdo button_press -k 1;xdo button_release -k 1;"
+      cmd[].add "xdo key_press -k " & $i & ";xdo key_release -k " & $i & ";" & static(
+        "xdo button_press -k 1;xdo button_release -k 1;".repeat(9))
   result = execCmdEx(cmd[])
   dealloc cmd
 
@@ -552,7 +552,7 @@ proc xdo_type_NimVersion*(): tuple[output: TaintedString, exitCode: int] {.inlin
 
 proc xdo_type_CompileTime*(): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the CompileDate & CompileTime using keyboard keys.
-  for letter in CompileDate & CompileTime: result = xdo_type(letter)
+  for letter in static(CompileDate & "T" & CompileTime): result = xdo_type(letter)
 
 proc xdo_type_enter*(words: string): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the words then press Enter at the end using keyboard keys.
@@ -564,7 +564,7 @@ runnableExamples:
   ## XDo works on Linux OS.
   when defined(linux):
     ## Basic example of mouse and keyboard control from code.
-    import os, osproc, ospaths, strformat, strutils, terminal, random, json, times, tables
+    import os, osproc, strformat, strutils, terminal, random, json, times, tables
     echo xdo_version
     echo xdo_get_id()
     echo xdo_get_pid()
