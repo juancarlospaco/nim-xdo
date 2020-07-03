@@ -528,34 +528,58 @@ template xdo_type*(letter: char): tuple[output: TaintedString, exitCode: int] =
   ## Type a single letter using keyboard keys from char argument.
   execCmdEx("xdo key_press -k " & $char2keycode[$letter] & "; xdo key_release -k " & $char2keycode[$letter])
 
+template tipe(letter: char): string =
+  "xdo key_press -k " & $char2keycode[$letter] & ";xdo key_release -k " & $char2keycode[$letter] & ";"
+
 proc xdo_type_temp_dir*(): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the system temporary directory full path using keyboard keys.
-  for letter in getTempDir(): result = xdo_type(letter)
+  let cmd = create(string, sizeOf string)
+  for letter in getTempDir(): cmd[].add tipe(letter)
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 proc xdo_type_current_dir*(): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the current working directory full path using keyboard keys.
-  for letter in getCurrentDir(): result = xdo_type(letter)
+  let cmd = create(string, sizeOf string)
+  for letter in getCurrentDir(): cmd[].add tipe(letter)
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 proc xdo_type_hostOS*(): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the hostOS using keyboard keys.
-  for letter in hostOS: result = xdo_type(letter)
+  let cmd = create(string, sizeOf string)
+  for letter in hostOS: cmd[].add tipe(letter)
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 proc xdo_type_hostCPU*(): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the hostCPU using keyboard keys.
-  for letter in hostCPU: result = xdo_type(letter)
+  let cmd = create(string, sizeOf string)
+  for letter in hostCPU: cmd[].add tipe(letter)
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 proc xdo_type_NimVersion*(): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the current NimVersion using keyboard keys.
-  for letter in NimVersion: result = xdo_type(letter)
+  let cmd = create(string, sizeOf string)
+  for letter in NimVersion: cmd[].add tipe(letter)
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 proc xdo_type_CompileTime*(): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the CompileDate & CompileTime using keyboard keys.
-  for letter in static(CompileDate & "T" & CompileTime): result = xdo_type(letter)
+  let cmd = create(string, sizeOf string)
+  for letter in static(CompileDate & "T" & CompileTime): cmd[].add tipe(letter)
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 proc xdo_type_enter*(words: string): tuple[output: TaintedString, exitCode: int] {.inline.} =
   ## Type the words then press Enter at the end using keyboard keys.
-  for letter in words: discard xdo_type(letter)
-  result = execCmdEx("xdo key_press -k 13; xdo key_release -k 13")
+  let cmd = create(string, sizeOf string)
+  for letter in words: cmd[].add tipe(letter)
+  cmd[].add "xdo key_press -k 13; xdo key_release -k 13"
+  result = execCmdEx(cmd[])
+  dealloc cmd
 
 
 runnableExamples:
