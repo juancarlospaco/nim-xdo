@@ -1,4 +1,4 @@
-version       = "0.5.5"
+version       = "0.7.5"
 author        = "Juan Carlos, Mircea Ilie Ploscaru"
 description   = "Nim GUI Automation Linux, simulate user interaction, mouse and keyboard."
 license       = "MIT"

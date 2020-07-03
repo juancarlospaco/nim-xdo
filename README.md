@@ -182,8 +182,6 @@ xdo_key_numbers_click(9) # 1,10clicks,2,10clicks,3,10clicks,etc up to 9 (in game
 
 </details>
 
-Theres 2 JSON `keycode2char` and `char2keycode` to convert KeyCodes integers to/from Characters strings (human readable keyboard keys).
-
 - **Pull Requests are very welcome!.**
 - [Check Docs on Nimble.](https://nimble.directory/docs/xdo//xdo.html)
 - Run `nim doc xdo.nim` for more documentation.
