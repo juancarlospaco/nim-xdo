@@ -7,59 +7,63 @@
 from strutils import repeat
 when not defined(linux): {.warning: "ERROR: XDo is only available for Linux.".}
 
-func toKeycode*(c: char): int =
-  ## https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h#L77
-  case c  # Hard to find the correct values for those keycodes, mac and windows differ too.
-  of '1': 2
-  of '2': 3
-  of '3': 4
-  of '4': 5
-  of '5': 6
-  of '6': 7
-  of '7': 8
-  of '8': 9
-  of '9': 10
-  of '0': 11
-  of '-': 12
-  of '=': 13
-  of '\t': 15
-  of 'q': 16
-  of 'w': 17
-  of 'e': 18
-  of 'r': 19
-  of 't': 20
-  of 'y': 21
-  of 'u': 22
-  of 'i': 23
-  of 'o': 24
-  of 'p': 25
-  of '[': 26
-  of ']': 27
-  of '\n': 28
-  of 'a': 30
-  of 's': 31
-  of 'd': 32
-  of 'f': 33
-  of 'g': 34
-  of 'h': 35
-  of 'j': 36
-  of 'k': 37
-  of 'l': 38
-  of ';': 39
-  of '\'': 40
-  of '\\': 43
-  of 'z':  44
-  of 'x':  45
-  of 'c':  46
-  of 'v':  47
-  of 'b':  48
-  of 'n':  49
-  of 'm':  50
-  of ',':  51
-  of '.':  52
-  of '/':  53
-  of ' ':  57
-  else:    57
+func toKeycode*(c: char): int {.noinline.} =
+  ## https://gist.github.com/rickyzhang82/8581a762c9f9fc6ddb8390872552c250#file-keycode-linux-L33-L137
+  case c      # Hard to find the correct values for those keycodes, mac and windows differ too.
+  of '1': 10  # Some values found just looping integers 10..999  :(
+  of '2': 11
+  of '3': 12
+  of '4': 13
+  of '5': 14
+  of '6': 15
+  of '7': 16
+  of '8': 17
+  of '9': 18
+  of '0': 19
+  of '-': 20
+  of '=': 21
+  of '\t': 23
+  of 'q': 24
+  of 'w': 25
+  of 'e': 26
+  of 'r': 27
+  of 't': 28
+  of 'y': 29
+  of 'u': 30
+  of 'i': 31
+  of 'o': 32
+  of 'p': 33
+  of '[': 34
+  of ']': 35
+  of '\n': 36
+  of 'a': 38
+  of 's': 39
+  of 'd': 40
+  of 'f': 41
+  of 'g': 42
+  of 'h': 43
+  of 'j': 44
+  of 'k': 45
+  of 'l': 46
+  of ';': 47
+  of '\'': 48
+  of '`': 49
+  of '\\': 51
+  of 'z': 52
+  of 'x': 53
+  of 'c': 54
+  of 'v': 55
+  of 'b': 56
+  of 'n': 57
+  of 'm': 58
+  of ',': 59
+  of '.': 60
+  of '/': 61
+  of '*': 63
+  of ' ': 65
+  of '+': 86
+  of '<': 94
+  else: 999
 
 template xdo*(action: string, move: tuple[x: string, y: string] = (x: "0", y: "0"),
           instance_name = "", class_name = "", wm_name = "", pid = 0,
