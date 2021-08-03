@@ -523,7 +523,7 @@ proc type_CompileTime*(): string {.inline.} =
 proc type_enter*(words: string): string {.inline.} =
   ## Type the words then press Enter at the end using keyboard keys.
   for letter in words: result.add tipe(letter)
-  result.add "xdo key_press -k 13;xdo key_release -k 13;"
+  result.add "xdo key_press -k 36;xdo key_release -k 36;"
 
 
 runnableExamples:
