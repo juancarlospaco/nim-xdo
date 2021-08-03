@@ -7,6 +7,60 @@
 from strutils import repeat
 when not defined(linux): {.warning: "ERROR: XDo is only available for Linux.".}
 
+func toKeycode*(c: char): int =
+  ## https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h#L77
+  case c  # Hard to find the correct values for those keycodes, mac and windows differ too.
+  of '1': 2
+  of '2': 3
+  of '3': 4
+  of '4': 5
+  of '5': 6
+  of '6': 7
+  of '7': 8
+  of '8': 9
+  of '9': 10
+  of '0': 11
+  of '-': 12
+  of '=': 13
+  of '\t': 15
+  of 'q': 16
+  of 'w': 17
+  of 'e': 18
+  of 'r': 19
+  of 't': 20
+  of 'y': 21
+  of 'u': 22
+  of 'i': 23
+  of 'o': 24
+  of 'p': 25
+  of '[': 26
+  of ']': 27
+  of '\n': 28
+  of 'a': 30
+  of 's': 31
+  of 'd': 32
+  of 'f': 33
+  of 'g': 34
+  of 'h': 35
+  of 'j': 36
+  of 'k': 37
+  of 'l': 38
+  of ';': 39
+  of '\'': 40
+  of '\\': 43
+  of 'z':  44
+  of 'x':  45
+  of 'c':  46
+  of 'v':  47
+  of 'b':  48
+  of 'n':  49
+  of 'm':  50
+  of ',':  51
+  of '.':  52
+  of '/':  53
+  of ' ':  57
+  else:    57
+
 template xdo*(action: string, move: tuple[x: string, y: string] = (x: "0", y: "0"),
           instance_name = "", class_name = "", wm_name = "", pid = 0,
           wait4window = false, same_desktop = true, same_class = true, same_id = true): string =
@@ -444,7 +498,7 @@ proc key_numbers_click*(repetitions = 1.Positive): string {.inline.} =
 
 template tipe*(letter: char): string =
   ## Type a single letter using keyboard keys from char argument.
-  "xdo key_press -k " & $ord(letter) & ";xdo key_release -k " & $ord(letter) & ';'
+  "xdo key_press -k " & $toKeycode(letter) & ";xdo key_release -k " & $toKeycode(letter) & ';'
 
 proc type_hostOS*(): string {.inline.} =
   ## Type the hostOS using keyboard keys.
