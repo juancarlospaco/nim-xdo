@@ -240,6 +240,10 @@ template key_ctrl*(): string =
   ## Keyboard Key Ctrl.
   "xdo key_press -k 17;xdo key_release -k 17;"
 
+template key_ctrl_enter*(): string =
+  ## Keyboard Key Ctrl + Enter.
+  "xdo key_press -k 17;xdo key_press -k 36;xdo key_release -k 17;xdo key_release -k 36;"
+
 template key_alt*(): string =
   ## Keyboard Key Alt.
   "xdo key_press -k 18;xdo key_release -k 18;"
