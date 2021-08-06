@@ -238,17 +238,17 @@ template getId*(): string =
   ## Get Window ID.
   "xdo id;"
 
-template move_mouse*(move: tuple[x: string, y: string]): string =
+template move_mouse*(x, y: string or int): string =
   ## Move mouse to move position pixel coordinates (X, Y).
-  "xdo pointer_motion -x " & $move.x & " -y " & $move.y & ';'
+  "xdo pointer_motion -x " & $x & " -y " & $y & ';'
 
-template move_window*(move: tuple[x: string, y: string], pid: Positive): string =
+template move_window*(x, y: string or int; pid: Positive): string =
   ## Move window to move position pixel coordinates (X, Y).
-  "xdo move -x " & $move.x & " -y " & $move.y & " -p " & $pid & ';'
+  "xdo move -x " & $x & " -y " & $y & " -p " & $pid & ';'
 
-template resize_window*(move: tuple[x: string, y: string], pid: Positive): string =
+template resize_window*(x, y: string or int; pid: Positive): string =
   ## Resize window up to move position pixel coordinates (X, Y).
-  "xdo resize -w " & $move.x & " -h " & $move.y & " -p " & $pid & ';'
+  "xdo resize -w " & $x & " -h " & $y & " -p " & $pid & ';'
 
 template activate_this_window*(pid: Positive): string =
   ## Force to Activate this window by PID.
@@ -262,9 +262,9 @@ template move_mouse_left_100px*(repetitions: Positive): string =
   ## Move mouse to Left X=0, then repeat move Right on jumps of 100px each.
   "xdo pointer_motion -x 0;" & "xdo pointer_motion -x +100;".repeat(repetitions)
 
-proc mouse_move_alternating*(move: tuple[x: int, y: int], repetitions = 1.Positive): string {.inline.} =
+proc mouse_move_alternating*(x, y: string or int; repetitions = 1.Positive): string {.inline.} =
   ## Move mouse alternating to Left/Right Up/Down, AKA Zig-Zag movements.
-  for i in 0..repetitions: result.add "xdo pointer_motion -x " & $(if i mod 2 == 0: "+" else: "-" & $move.x) & " -y " & $(if i mod 2 == 0: "+" else: "-" & $move.y) & ';'
+  for i in 0..repetitions: result.add "xdo pointer_motion -x " & $(if i mod 2 == 0: "+" else: "-" & $x) & " -y " & $(if i mod 2 == 0: "+" else: "-" & $y) & ';'
 
 template mouse_spamm_left_click*(repetitions = 1.Positive): string =
   ## Spamm Mouse Left Click as fast as possible.
@@ -278,11 +278,11 @@ template mouse_spamm_right_click*(repetitions = 1.Positive): string =
   ## Spamm Mouse Right Click as fast as possible.
   "xdo button_press -k 3;xdo button_release -k 3;".repeat(repetitions)
 
-template mouse_swipe_horizontal*(x: string): string =
+template mouse_swipe_horizontal*(x: string or int): string =
   ## Mouse Swipe to Left or Right, Hold Left Click+Drag Horizontally+Release Left Click.
   "xdo button_press -k 1;xdo pointer_motion -x " & $x & ";xdo button_release -k 1;"
 
-template mouse_swipe_vertical*(y: string): string =
+template mouse_swipe_vertical*(y: string or int): string =
   ## Mouse Swipe to Up or Down, Hold Left Click+Drag Vertically+Release Left Click.
   "xdo button_press -k 1;xdo pointer_motion -y " & $y & ";xdo button_release -k 1;"
 
@@ -322,10 +322,10 @@ runnableExamples:
     import strutils
     echo get_id()
     echo get_pid()
-    echo move_mouse((x: "+99", y: "+99"))
+    echo move_mouse(x = "+99", y = "+99")
     echo move_mouse_left_100px(2)
     echo move_mouse_top_100px(2)
-    echo mouse_move_alternating((x: 9, y: 5), 3)
+    echo mouse_move_alternating(x = 9, y = 5, 3)
     # echo key_0()
     # echo key_1()
     # echo key_2()
