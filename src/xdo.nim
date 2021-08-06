@@ -92,8 +92,10 @@ type XDoActions* = enum
   key7            = "xdo key_press -k 55;xdo key_release -k 55;"
   key8            = "xdo key_press -k 56;xdo key_release -k 56;"
   key9            = "xdo key_press -k 57;xdo key_release -k 57;"
-  # Left Click, CTRL+a, Delete
+  # Left Click, CTRL + a, Delete
   clickCtrlADelete = "xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 17;xdo button_press -k 38;xdo button_release -k 38;xdo key_release -k 17;xdo key_press -k 8;xdo key_release -k 8;"
+  # CTRL + Shift + i
+  ctrlShiftI      = "xdo key_press -k 17;xdo key_press -k 16;xdo button_press -k 31;xdo button_release -k 31;xdo key_release -k 16;xdo key_release -k 17;"
 
 template withShift(s: static[string]): static[string] =
   "xdo button_press -k 16;" & s & "xdo button_release -k 16;"  # Same Key + Shift
