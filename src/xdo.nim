@@ -7,63 +7,205 @@
 from strutils import repeat
 when not defined(linux): {.warning: "ERROR: XDo is only available for Linux.".}
 
-func toKeycode*(c: char): int {.noinline.} =
-  ## https://gist.github.com/rickyzhang82/8581a762c9f9fc6ddb8390872552c250#file-keycode-linux-L33-L137
-  case c      # Hard to find the correct values for those keycodes, mac and windows differ too.
-  of '1': 10  # Some values found just looping integers 10..999  :(
-  of '2': 11
-  of '3': 12
-  of '4': 13
-  of '5': 14
-  of '6': 15
-  of '7': 16
-  of '8': 17
-  of '9': 18
-  of '0': 19
-  of '-': 20
-  of '=': 21
-  of '\t': 23
-  of 'q': 24
-  of 'w': 25
-  of 'e': 26
-  of 'r': 27
-  of 't': 28
-  of 'y': 29
-  of 'u': 30
-  of 'i': 31
-  of 'o': 32
-  of 'p': 33
-  of '[': 34
-  of ']': 35
-  of '\n': 36
-  of 'a': 38
-  of 's': 39
-  of 'd': 40
-  of 'f': 41
-  of 'g': 42
-  of 'h': 43
-  of 'j': 44
-  of 'k': 45
-  of 'l': 46
-  of ';': 47
-  of '\'': 48
-  of '`': 49
-  of '\\': 51
-  of 'z': 52
-  of 'x': 53
-  of 'c': 54
-  of 'v': 55
-  of 'b': 56
-  of 'n': 57
-  of 'm': 58
-  of ',': 59
-  of '.': 60
-  of '/': 61
-  of '*': 63
-  of ' ': 65
-  of '+': 86
-  of '<': 94
-  else: 999
+type XDoActions* = enum
+  closeFocusedWindow       = "xdo close -c;"
+  hideFocusedWindow        = "xdo hide -c;"
+  showFocusedWindow        = "xdo show -c;"
+  raiseFocusedWindow       = "xdo raise -c;"
+  lowerFocusedWindow       = "xdo lower -c;"
+  hideAllButFocusedWindow  = "xdo hide -dr;"
+  closeAllButFocusedWindow = "xdo close -dr;"
+  raiseAllButFocusedWindow = "xdo raise -dr;"
+  lowerAllButFocusedWindow = "xdo lower -dr;"
+  showAllButFocusedWindow  = "xdo show -dr;"
+  moveMouseTopLeft         = "xdo pointer_motion -x 0 -y 0;"
+  mouseLeftClick           = "xdo button_press -k 1;xdo button_release -k 1;"
+  mouseMiddleClick         = "xdo button_press -k 2;xdo button_release -k 2;"
+  mouseRightClick          = "xdo button_press -k 3;xdo button_release -k 3;"
+  mouseDoubleLeftClick     = "xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;"
+  mouseDoubleMiddleClick   = "xdo button_press -k 2;xdo button_release -k 2;xdo button_press -k 2;xdo button_release -k 2;"
+  mouseDoubleRightClick    = "xdo button_press -k 3;xdo button_release -k 3;xdo button_press -k 3;xdo button_release -k 3;"
+  mouseTripleLeftClick     = "xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;"
+  mouseTripleMiddleClick   = "xdo button_press -k 2;xdo button_release -k 2;xdo button_press -k 2;xdo button_release -k 2;xdo button_press -k 2;xdo button_release -k 2;"
+  mouseTripleRightClick    = "xdo button_press -k 3;xdo button_release -k 3;xdo button_press -k 3;xdo button_release -k 3;xdo button_press -k 3;xdo button_release -k 3;"
+  keyBackspace    = "xdo key_press -k 8;xdo key_release -k 8;"
+  keyTab          = "xdo key_press -k 9;xdo key_release -k 9;"
+  keyEnter        = "xdo key_press -k 13;xdo key_release -k 13;"
+  keyShift        = "xdo key_press -k 16;xdo key_release -k 16;"
+  keyCtrl         = "xdo key_press -k 17;xdo key_release -k 17;"
+  keyCtrlEnter    = "xdo key_press -k 17;xdo key_press -k 36;xdo key_release -k 17;xdo key_release -k 36;"
+  keyAlt          = "xdo key_press -k 18;xdo key_release -k 18;"
+  keyPause        = "xdo key_press -k 19;xdo key_release -k 19;"
+  keyCapslock     = "xdo key_press -k 20;xdo key_release -k 20;"
+  keyEsc          = "xdo key_press -k 27;xdo key_release -k 27;"
+  keySpace        = "xdo key_press -k 32;xdo key_release -k 32;"
+  keyPageup       = "xdo key_press -k 33;xdo key_release -k 33;"
+  keyPagedown     = "xdo key_press -k 34;xdo key_release -k 34;"
+  keyEnd          = "xdo key_press -k 35;xdo key_release -k 35;"
+  keyHome         = "xdo key_press -k 36;xdo key_release -k 36;"
+  keyArrowLeft    = "xdo key_press -k 37;xdo key_release -k 37;"
+  keyArrowUp      = "xdo key_press -k 38;xdo key_release -k 38;"
+  keyArrowRight   = "xdo key_press -k 39;xdo key_release -k 39;"
+  keyArrowDown    = "xdo key_press -k 40;xdo key_release -k 40;"
+  keyInsert       = "xdo key_press -k 45;xdo key_release -k 45;"
+  keyDelete       = "xdo key_press -k 46;xdo key_release -k 46;"
+  keyNumlock      = "xdo key_press -k 144;xdo key_release -k 144;"
+  keyScrolllock   = "xdo key_press -k 145;xdo key_release -k 145;"
+  keyMycomputer   = "xdo key_press -k 182;xdo key_release -k 182;"
+  keyMycalculator = "xdo key_press -k 183;xdo key_release -k 183;"
+  keyWindows      = "xdo key_press -k 91;xdo key_release -k 91;"
+  keyRightclick   = "xdo key_press -k 93;xdo key_release -k 93;"
+  keyNumpad0      = "xdo key_press -k 96;xdo key_release -k 96;"
+  keyNumpad1      = "xdo key_press -k 97;xdo key_release -k 97;"
+  keyNumpad2      = "xdo key_press -k 98;xdo key_release -k 98;"
+  keyNumpad3      = "xdo key_press -k 99;xdo key_release -k 99;"
+  keyNumpad4      = "xdo key_press -k 100;xdo key_release -k 100;"
+  keyNumpad5      = "xdo key_press -k 101;xdo key_release -k 101;"
+  keyNumpad6      = "xdo key_press -k 102;xdo key_release -k 102;"
+  keyNumpad7      = "xdo key_press -k 103;xdo key_release -k 103;"
+  keyNumpad8      = "xdo key_press -k 104;xdo key_release -k 104;"
+  keyNumpad9      = "xdo key_press -k 105;xdo key_release -k 105;"
+  keyNumpadAsterisk = "xdo key_press -k 106;xdo key_release -k 106;"
+  keyNumpadPlus   = "xdo key_press -k 107;xdo key_release -k 107;"
+  keyNumpadMinus  = "xdo key_press -k 109;xdo key_release -k 109;"
+  keyNumpadDot    = "xdo key_press -k 110;xdo key_release -k 110;"
+  keyNumpadSlash  = "xdo key_press -k 111;xdo key_release -k 111;"
+  keyF1           = "xdo key_press -k 112;xdo key_release -k 112;"
+  keyF2           = "xdo key_press -k 113;xdo key_release -k 113;"
+  keyF3           = "xdo key_press -k 114;xdo key_release -k 114;"
+  keyF4           = "xdo key_press -k 115;xdo key_release -k 115;"
+  keyF5           = "xdo key_press -k 116;xdo key_release -k 116;"
+  keyF6           = "xdo key_press -k 117;xdo key_release -k 117;"
+  keyF7           = "xdo key_press -k 118;xdo key_release -k 118;"
+  keyF8           = "xdo key_press -k 119;xdo key_release -k 119;"
+  keyF9           = "xdo key_press -k 120;xdo key_release -k 120;"
+  keyF10          = "xdo key_press -k 121;xdo key_release -k 121;"
+  keyF11          = "xdo key_press -k 122;xdo key_release -k 122;"
+  keyF12          = "xdo key_press -k 123;xdo key_release -k 123;"
+  key0            = "xdo key_press -k 48;xdo key_release -k 48;"
+  key1            = "xdo key_press -k 49;xdo key_release -k 49;"
+  key2            = "xdo key_press -k 50;xdo key_release -k 50;"
+  key3            = "xdo key_press -k 51;xdo key_release -k 51;"
+  key4            = "xdo key_press -k 52;xdo key_release -k 52;"
+  key5            = "xdo key_press -k 53;xdo key_release -k 53;"
+  key6            = "xdo key_press -k 54;xdo key_release -k 54;"
+  key7            = "xdo key_press -k 55;xdo key_release -k 55;"
+  key8            = "xdo key_press -k 56;xdo key_release -k 56;"
+  key9            = "xdo key_press -k 57;xdo key_release -k 57;"
+  # Left Click, CTRL+a, Delete
+  clickCtrlADelete = "xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 17;xdo button_press -k 38;xdo button_release -k 38;xdo key_release -k 17;xdo key_press -k 8;xdo key_release -k 8;"
+
+template withShift(s: static[string]): static[string] =
+  "xdo button_press -k 16;" & s & "xdo button_release -k 16;"  # Same Key + Shift
+
+func toCmd*(c: char): string {.noinline.} =
+  # https://gist.github.com/rickyzhang82/8581a762c9f9fc6ddb8390872552c250#file-keycode-linux-L33-L137
+  case c      # Hard to find the correct values for those keycodes, mac and windows differ too. :(
+  of '1':  "xdo button_press -k 10;xdo button_release -k 10;"
+  of '2':  "xdo button_press -k 11;xdo button_release -k 11;"
+  of '3':  "xdo button_press -k 12;xdo button_release -k 12;"
+  of '4':  "xdo button_press -k 13;xdo button_release -k 13;"
+  of '5':  "xdo button_press -k 14;xdo button_release -k 14;"
+  of '6':  "xdo button_press -k 15;xdo button_release -k 15;"
+  of '7':  "xdo button_press -k 16;xdo button_release -k 16;"
+  of '8':  "xdo button_press -k 17;xdo button_release -k 17;"
+  of '9':  "xdo button_press -k 18;xdo button_release -k 18;"
+  of '0':  "xdo button_press -k 19;xdo button_release -k 19;"
+  of '-':  "xdo button_press -k 20;xdo button_release -k 20;"
+  of '=':  "xdo button_press -k 21;xdo button_release -k 21;"
+  of '\t': "xdo button_press -k 23;xdo button_release -k 23;"
+  of 'q':  "xdo button_press -k 24;xdo button_release -k 24;"
+  of 'w':  "xdo button_press -k 25;xdo button_release -k 25;"
+  of 'e':  "xdo button_press -k 26;xdo button_release -k 26;"
+  of 'r':  "xdo button_press -k 27;xdo button_release -k 27;"
+  of 't':  "xdo button_press -k 28;xdo button_release -k 28;"
+  of 'y':  "xdo button_press -k 29;xdo button_release -k 29;"
+  of 'u':  "xdo button_press -k 30;xdo button_release -k 30;"
+  of 'i':  "xdo button_press -k 31;xdo button_release -k 31;"
+  of 'o':  "xdo button_press -k 32;xdo button_release -k 32;"
+  of 'p':  "xdo button_press -k 33;xdo button_release -k 33;"
+  of '[':  "xdo button_press -k 34;xdo button_release -k 34;"
+  of ']':  "xdo button_press -k 35;xdo button_release -k 35;"
+  of '\n': "xdo button_press -k 36;xdo button_release -k 36;"
+  of 'a':  "xdo button_press -k 38;xdo button_release -k 38;"
+  of 's':  "xdo button_press -k 39;xdo button_release -k 39;"
+  of 'd':  "xdo button_press -k 40;xdo button_release -k 40;"
+  of 'f':  "xdo button_press -k 41;xdo button_release -k 41;"
+  of 'g':  "xdo button_press -k 42;xdo button_release -k 42;"
+  of 'h':  "xdo button_press -k 43;xdo button_release -k 43;"
+  of 'j':  "xdo button_press -k 44;xdo button_release -k 44;"
+  of 'k':  "xdo button_press -k 45;xdo button_release -k 45;"
+  of 'l':  "xdo button_press -k 46;xdo button_release -k 46;"
+  of ';':  "xdo button_press -k 47;xdo button_release -k 47;"
+  of '\'': "xdo button_press -k 48;xdo button_release -k 48;"
+  of '`':  "xdo button_press -k 49;xdo button_release -k 49;"
+  of '\\': "xdo button_press -k 51;xdo button_release -k 51;"
+  of 'z':  "xdo button_press -k 52;xdo button_release -k 52;"
+  of 'x':  "xdo button_press -k 53;xdo button_release -k 53;"
+  of 'c':  "xdo button_press -k 54;xdo button_release -k 54;"
+  of 'v':  "xdo button_press -k 55;xdo button_release -k 55;"
+  of 'b':  "xdo button_press -k 56;xdo button_release -k 56;"
+  of 'n':  "xdo button_press -k 57;xdo button_release -k 57;"
+  of 'm':  "xdo button_press -k 58;xdo button_release -k 58;"
+  of ',':  "xdo button_press -k 59;xdo button_release -k 59;"
+  of '.':  "xdo button_press -k 60;xdo button_release -k 60;"
+  of '/':  "xdo button_press -k 61;xdo button_release -k 61;"
+  of '*':  "xdo button_press -k 63;xdo button_release -k 63;"
+  of ' ':  "xdo button_press -k 65;xdo button_release -k 65;"
+  of '+':  "xdo button_press -k 86;xdo button_release -k 86;"
+  of '<':  "xdo button_press -k 94;xdo button_release -k 94;"
+  of '{':  withShift"xdo button_press -k 34;xdo button_release -k 34;"
+  of '}':  withShift"xdo button_press -k 35;xdo button_release -k 35;"
+  of '_':  withShift"xdo button_press -k 20;xdo button_release -k 20;"
+  of '"':  withShift"xdo button_press -k 48;xdo button_release -k 48;"
+  of '~':  withShift"xdo button_press -k 49;xdo button_release -k 49;"
+  of '|':  withShift"xdo button_press -k 51;xdo button_release -k 51;"
+  of '>':  withShift"xdo button_press -k 60;xdo button_release -k 60;"
+  of '!':  withShift"xdo button_press -k 10;xdo button_release -k 10;"
+  of '@':  withShift"xdo button_press -k 11;xdo button_release -k 11;"
+  of '#':  withShift"xdo button_press -k 12;xdo button_release -k 12;"
+  of '$':  withShift"xdo button_press -k 13;xdo button_release -k 13;"
+  of '%':  withShift"xdo button_press -k 14;xdo button_release -k 14;"
+  of '^':  withShift"xdo button_press -k 15;xdo button_release -k 15;"
+  of '&':  withShift"xdo button_press -k 16;xdo button_release -k 16;"
+  of '(':  withShift"xdo button_press -k 18;xdo button_release -k 18;"
+  of ')':  withShift"xdo button_press -k 19;xdo button_release -k 19;"
+  of '?':  withShift"xdo button_press -k 61;xdo button_release -k 61;"
+  of ':':  withShift"xdo button_press -k 47;xdo button_release -k 47;"
+  of 'Q':  withShift"xdo button_press -k 24;xdo button_release -k 24;"
+  of 'W':  withShift"xdo button_press -k 25;xdo button_release -k 25;"
+  of 'E':  withShift"xdo button_press -k 26;xdo button_release -k 26;"
+  of 'R':  withShift"xdo button_press -k 27;xdo button_release -k 27;"
+  of 'T':  withShift"xdo button_press -k 28;xdo button_release -k 28;"
+  of 'Y':  withShift"xdo button_press -k 29;xdo button_release -k 29;"
+  of 'U':  withShift"xdo button_press -k 30;xdo button_release -k 30;"
+  of 'I':  withShift"xdo button_press -k 31;xdo button_release -k 31;"
+  of 'O':  withShift"xdo button_press -k 32;xdo button_release -k 32;"
+  of 'P':  withShift"xdo button_press -k 33;xdo button_release -k 33;"
+  of 'A':  withShift"xdo button_press -k 38;xdo button_release -k 38;"
+  of 'S':  withShift"xdo button_press -k 39;xdo button_release -k 39;"
+  of 'D':  withShift"xdo button_press -k 40;xdo button_release -k 40;"
+  of 'F':  withShift"xdo button_press -k 41;xdo button_release -k 41;"
+  of 'G':  withShift"xdo button_press -k 42;xdo button_release -k 42;"
+  of 'H':  withShift"xdo button_press -k 43;xdo button_release -k 43;"
+  of 'J':  withShift"xdo button_press -k 44;xdo button_release -k 44;"
+  of 'K':  withShift"xdo button_press -k 45;xdo button_release -k 45;"
+  of 'L':  withShift"xdo button_press -k 46;xdo button_release -k 46;"
+  of 'Z':  withShift"xdo button_press -k 52;xdo button_release -k 52;"
+  of 'X':  withShift"xdo button_press -k 53;xdo button_release -k 53;"
+  of 'C':  withShift"xdo button_press -k 54;xdo button_release -k 54;"
+  of 'V':  withShift"xdo button_press -k 55;xdo button_release -k 55;"
+  of 'B':  withShift"xdo button_press -k 56;xdo button_release -k 56;"
+  of 'N':  withShift"xdo button_press -k 57;xdo button_release -k 57;"
+  of 'M':  withShift"xdo button_press -k 58;xdo button_release -k 58;"
+  of '\0': ""
+  else:    ""
+
+func toCmd*(actions: openArray[XDoActions]): string =
+  for action in actions: result.add $action
+
+func toCmd*(actions: openArray[char]): string =
+  for action in actions: result.add toCmd(action)
 
 template xdo*(action: string, move: tuple[x: string, y: string] = (x: "0", y: "0"),
           instance_name = "", class_name = "", wm_name = "", pid = 0,
@@ -84,6 +226,14 @@ template xdo*(action: string, move: tuple[x: string, y: string] = (x: "0", y: "0
     (if move != ("0", "0"): " -x " & $move.x & " -y " & $move.y & " " else: "") & ";"
   )
 
+template getPid*(): string =
+  ## Get Process ID.
+  "xdo pid;"
+
+template getId*(): string =
+  ## Get Window ID.
+  "xdo id;"
+
 template move_mouse*(move: tuple[x: string, y: string]): string =
   ## Move mouse to move position pixel coordinates (X, Y).
   "xdo pointer_motion -x " & $move.x & " -y " & $move.y & ';'
@@ -96,53 +246,9 @@ template resize_window*(move: tuple[x: string, y: string], pid: Positive): strin
   ## Resize window up to move position pixel coordinates (X, Y).
   "xdo resize -w " & $move.x & " -h " & $move.y & " -p " & $pid & ';'
 
-template close_focused_window*(): string =
-  ## Close the current focused window.
-  "xdo close -c;"
-
-template hide_focused_window*(): string =
-  ## Hide the current focused window. This is NOT Minimize.
-  "xdo hide -c;"
-
-template show_focused_window*(): string =
-  ## Hide the current focused window. This is NOT Maximize.
-  "xdo show -c;"
-
-template raise_focused_window*(): string =
-  ## Raise up the current focused window.
-  "xdo raise -c;"
-
-template lower_focused_window*(): string =
-  ## Lower down the current focused window.
-  "xdo lower -c;"
-
 template activate_this_window*(pid: Positive): string =
   ## Force to Activate this window by PID.
   "xdo activate -p " & $pid & ";"
-
-template hide_all_but_focused_window*(): string =
-  ## Hide all other windows but leave the current focused window visible.
-  "xdo hide -dr;"
-
-template close_all_but_focused_window*(): string =
-  ## Close all other windows but leave the current focused window open.
-  "xdo close -dr;"
-
-template raise_all_but_focused_window*(): string =
-  ## Raise up all other windows but the current focused window.
-  "xdo raise -dr;"
-
-template lower_all_but_focused_window*(): string =
-  ## Lower down all other windows but the current focused window.
-  "xdo lower -dr;"
-
-template show_all_but_focused_window*(): string =
-  ## Show all other windows but the current focused window.
-  "xdo show -dr;"
-
-template move_mouse_top_left*(): string =
-  ## Move mouse to Top Left limits (X=0, Y=0).
-  "xdo pointer_motion -x 0 -y 0;"
 
 template move_mouse_top_100px*(repetitions: Positive): string =
   ## Move mouse to Top Y=0, then repeat move Bottom on jumps of 100px each.
@@ -152,53 +258,9 @@ template move_mouse_left_100px*(repetitions: Positive): string =
   ## Move mouse to Left X=0, then repeat move Right on jumps of 100px each.
   "xdo pointer_motion -x 0;" & "xdo pointer_motion -x +100;".repeat(repetitions)
 
-template get_pid*(): string =
-  ## Get PID of a window, integer type.
-  "xdo pid;"
-
-template get_id*(): string =
-  ## Get ID of a window, integer type.
-  "xdo id;"
-
 proc mouse_move_alternating*(move: tuple[x: int, y: int], repetitions = 1.Positive): string {.inline.} =
   ## Move mouse alternating to Left/Right Up/Down, AKA Zig-Zag movements.
   for i in 0..repetitions: result.add "xdo pointer_motion -x " & $(if i mod 2 == 0: "+" else: "-" & $move.x) & " -y " & $(if i mod 2 == 0: "+" else: "-" & $move.y) & ';'
-
-template mouse_left_click*(): string =
-  ## Mouse Left Click.
-  "xdo button_press -k 1;xdo button_release -k 1;"
-
-template mouse_middle_click*(): string =
-  ## Mouse Middle Click.
-  "xdo button_press -k 2;xdo button_release -k 2;"
-
-template mouse_right_click*(): string =
-  ## Mouse Right Click.
-  "xdo button_press -k 3;xdo button_release -k 3;"
-
-template mouse_double_left_click*(): string =
-  ## Mouse Double Left Click.
-  "xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;"
-
-template mouse_double_middle_click*(): string =
-  ## Mouse Double Middle Click.
-  "xdo button_press -k 2;xdo button_release -k 2;xdo button_press -k 2;xdo button_release -k 2;"
-
-template mouse_double_right_click*(): string =
-  ## Mouse Double Right Click.
-  "xdo button_press -k 3;xdo button_release -k 3;xdo button_press -k 3;xdo button_release -k 3;"
-
-template mouse_triple_left_click*(): string =
-  ## Mouse Triple Left Click.
-  "xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;"
-
-template mouse_triple_middle_click*(): string =
-  ## Mouse Triple Middle Click.
-  "xdo button_press -k 2;xdo button_release -k 2;xdo button_press -k 2;xdo button_release -k 2;xdo button_press -k 2;xdo button_release -k 2;"
-
-template mouse_triple_right_click*(): string =
-  ## Mouse Triple Right Click.
-  "xdo button_press -k 3;xdo button_release -k 3;xdo button_press -k 3;xdo button_release -k 3;xdo button_press -k 3;xdo button_release -k 3;"
 
 template mouse_spamm_left_click*(repetitions = 1.Positive): string =
   ## Spamm Mouse Left Click as fast as possible.
@@ -219,262 +281,6 @@ template mouse_swipe_horizontal*(x: string): string =
 template mouse_swipe_vertical*(y: string): string =
   ## Mouse Swipe to Up or Down, Hold Left Click+Drag Vertically+Release Left Click.
   "xdo button_press -k 1;xdo pointer_motion -y " & $y & ";xdo button_release -k 1;"
-
-template key_backspace*(): string =
-  ## Keyboard Key Backspace.
-  "xdo key_press -k 8;xdo key_release -k 8;"
-
-template key_tab*(): string =
-  ## Keyboard Key Tab.
-  "xdo key_press -k 9;xdo key_release -k 9;"
-
-template key_enter*(): string =
-  ## Keyboard Key Enter.
-  "xdo key_press -k 13;xdo key_release -k 13;"
-
-template key_shift*(): string =
-  ## Keyboard Key Shift.
-  "xdo key_press -k 16;xdo key_release -k 16;"
-
-template key_ctrl*(): string =
-  ## Keyboard Key Ctrl.
-  "xdo key_press -k 17;xdo key_release -k 17;"
-
-template key_ctrl_enter*(): string =
-  ## Keyboard Key Ctrl + Enter.
-  "xdo key_press -k 17;xdo key_press -k 36;xdo key_release -k 17;xdo key_release -k 36;"
-
-template key_alt*(): string =
-  ## Keyboard Key Alt.
-  "xdo key_press -k 18;xdo key_release -k 18;"
-
-template key_pause*(): string =
-  ## Keyboard Key Pause.
-  "xdo key_press -k 19;xdo key_release -k 19;"
-
-template key_capslock*(): string =
-  ## Keyboard Key Caps Lock.
-  "xdo key_press -k 20;xdo key_release -k 20;"
-
-template key_esc*(): string =
-  ## Keyboard Key Esc.
-  "xdo key_press -k 27;xdo key_release -k 27;"
-
-template key_space*(): string =
-  ## Keyboard Key Space.
-  "xdo key_press -k 32;xdo key_release -k 32;"
-
-template key_pageup*(): string =
-  ## Keyboard Key Page Up.
-  "xdo key_press -k 33;xdo key_release -k 33;"
-
-template key_pagedown*(): string =
-  ## Keyboard Key Page Down.
-  "xdo key_press -k 34;xdo key_release -k 34;"
-
-template key_end*(): string =
-  ## Keyboard Key End.
-  "xdo key_press -k 35;xdo key_release -k 35;"
-
-template key_home*(): string =
-  ## Keyboard Key Home.
-  "xdo key_press -k 36;xdo key_release -k 36;"
-
-template key_arrow_left*(): string =
-  ## Keyboard Key Arrow Left.
-  "xdo key_press -k 37;xdo key_release -k 37;"
-
-template key_arrow_up*(): string =
-  ## Keyboard Key Arrow Up.
-  "xdo key_press -k 38;xdo key_release -k 38;"
-
-template key_arrow_right*(): string =
-  ## Keyboard Key Arrow Right.
-  "xdo key_press -k 39;xdo key_release -k 39;"
-
-template key_arrow_down*(): string =
-  ## Keyboard Key Arrow Down.
-  "xdo key_press -k 40;xdo key_release -k 40;"
-
-template key_insert*(): string =
-  ## Keyboard Key Insert.
-  "xdo key_press -k 45;xdo key_release -k 45;"
-
-template key_delete*(): string =
-  ## Keyboard Key Delete.
-  "xdo key_press -k 46;xdo key_release -k 46;"
-
-template key_numlock*(): string =
-  ## Keyboard Key Num Lock.
-  "xdo key_press -k 144;xdo key_release -k 144;"
-
-template key_scrolllock*(): string =
-  ## Keyboard Key Scroll Lock.
-  "xdo key_press -k 145;xdo key_release -k 145;"
-
-template key_mycomputer*(): string =
-  ## Keyboard Key My Computer (HotKey thingy of some modern keyboards).
-  "xdo key_press -k 182;xdo key_release -k 182;"
-
-template key_mycalculator*(): string =
-  ## Keyboard Key My Calculator (HotKey thingy of some modern keyboards).
-  "xdo key_press -k 183;xdo key_release -k 183;"
-
-template key_windows*(): string =
-  ## Keyboard Key Windows (AKA Meta Key).
-  "xdo key_press -k 91;xdo key_release -k 91;"
-
-template key_rightclick*(): string =
-  ## Keyboard Key Right Click (HotKey thingy, fake click from keyboard key).
-  "xdo key_press -k 93;xdo key_release -k 93;"
-
-template key_numpad0*(): string =
-  ## Keyboard Key Numeric Pad 0.
-  "xdo key_press -k 96;xdo key_release -k 96;"
-
-template key_numpad1*(): string =
-  ## Keyboard Key Numeric Pad 1.
-  "xdo key_press -k 97;xdo key_release -k 97;"
-
-template key_numpad2*(): string =
-  ## Keyboard Key Numeric Pad 2.
-  "xdo key_press -k 98;xdo key_release -k 98;"
-
-template key_numpad3*(): string =
-  ## Keyboard Key Numeric Pad 3.
-  "xdo key_press -k 99;xdo key_release -k 99;"
-
-template key_numpad4*(): string =
-  ## Keyboard Key Numeric Pad 4.
-  "xdo key_press -k 100;xdo key_release -k 100;"
-
-template key_numpad5*(): string =
-  ## Keyboard Key Numeric Pad 5.
-  "xdo key_press -k 101;xdo key_release -k 101;"
-
-template key_numpad6*(): string =
-  ## Keyboard Key Numeric Pad 6.
-  "xdo key_press -k 102;xdo key_release -k 102;"
-
-template key_numpad7*(): string =
-  ## Keyboard Key Numeric Pad 7.
-  "xdo key_press -k 103;xdo key_release -k 103;"
-
-template key_numpad8*(): string =
-  ## Keyboard Key Numeric Pad 8.
-  "xdo key_press -k 104;xdo key_release -k 104;"
-
-template key_numpad9*(): string =
-  ## Keyboard Key Numeric Pad 9.
-  "xdo key_press -k 105;xdo key_release -k 105;"
-
-template key_numpad_asterisk*(): string =
-  ## Keyboard Key Numeric Pad ``*``.
-  "xdo key_press -k 106;xdo key_release -k 106;"
-
-template key_numpad_plus*(): string =
-  ## Keyboard Key Numeric Pad ``+``.
-  "xdo key_press -k 107;xdo key_release -k 107;"
-
-template key_numpad_minus*(): string =
-  ## Keyboard Key Numeric Pad ``-``.
-  "xdo key_press -k 109;xdo key_release -k 109;"
-
-template key_numpad_dot*(): string =
-  ## Keyboard Key Numeric Pad ``.``.
-  "xdo key_press -k 110;xdo key_release -k 110;"
-
-template key_numpad_slash*(): string =
-  ## Keyboard Key Numeric Pad ``/``.
-  "xdo key_press -k 111;xdo key_release -k 111;"
-
-template key_f1*(): string =
-  ## Keyboard Key F1.
-  "xdo key_press -k 112;xdo key_release -k 112;"
-
-template key_f2*(): string =
-  ## Keyboard Key F2.
-  "xdo key_press -k 113;xdo key_release -k 113;"
-
-template key_f3*(): string =
-  ## Keyboard Key F3.
-  "xdo key_press -k 114;xdo key_release -k 114;"
-
-template key_f4*(): string =
-  ## Keyboard Key F4.
-  "xdo key_press -k 115;xdo key_release -k 115;"
-
-template key_f5*(): string =
-  ## Keyboard Key F5.
-  "xdo key_press -k 116;xdo key_release -k 116;"
-
-template key_f6*(): string =
-  ## Keyboard Key F6.
-  "xdo key_press -k 117;xdo key_release -k 117;"
-
-template key_f7*(): string =
-  ## Keyboard Key F7.
-  "xdo key_press -k 118;xdo key_release -k 118;"
-
-template key_f8*(): string =
-  ## Keyboard Key F8.
-  "xdo key_press -k 119;xdo key_release -k 119;"
-
-template key_f9*(): string =
-  ## Keyboard Key F9.
-  "xdo key_press -k 120;xdo key_release -k 120;"
-
-template key_f10*(): string =
-  ## Keyboard Key F10.
-  "xdo key_press -k 121;xdo key_release -k 121;"
-
-template key_f11*(): string =
-  ## Keyboard Key F11.
-  "xdo key_press -k 122;xdo key_release -k 122;"
-
-template key_f12*(): string =
-  ## Keyboard Key F12.
-  "xdo key_press -k 123;xdo key_release -k 123;"
-
-template key_0*(): string =
-  ## Keyboard Key 0.
-  "xdo key_press -k 48;xdo key_release -k 48;"
-
-template key_1*(): string =
-  ## Keyboard Key 1.
-  "xdo key_press -k 49;xdo key_release -k 49;"
-
-template key_2*(): string =
-  ## Keyboard Key 2.
-  "xdo key_press -k 50;xdo key_release -k 50;"
-
-template key_3*(): string =
-  ## Keyboard Key 3.
-  "xdo key_press -k 51;xdo key_release -k 51;"
-
-template key_4*(): string =
-  ## Keyboard Key 4.
-  "xdo key_press -k 52;xdo key_release -k 52;"
-
-template key_5*(): string =
-  ## Keyboard Key 5.
-  "xdo key_press -k 53;xdo key_release -k 53;"
-
-template key_6*(): string =
-  ## Keyboard Key 6.
-  "xdo key_press -k 54;xdo key_release -k 54;"
-
-template key_7*(): string =
-  ## Keyboard Key 7.
-  "xdo key_press -k 55;xdo key_release -k 55;"
-
-template key_8*(): string =
-  ## Keyboard Key 8.
-  "xdo key_press -k 56;xdo key_release -k 56;"
-
-template key_9*(): string =
-  ## Keyboard Key 9.
-  "xdo key_press -k 57;xdo key_release -k 57;"
 
 template key_wasd*(repetitions = 1.Positive): string =
   ## Keyboard Keys W,A,S,D as fast as possible (in games,make circles).
@@ -504,46 +310,18 @@ proc key_numbers_click*(repetitions = 1.Positive): string {.inline.} =
   ## This function types the keys like: 1,10clicks,2,10clicks,3,10clicks,etc up to 9 (in games, shoot weapons 1 to 9).
   for _ in 0..repetitions: result.add "xdo key_press -k 49;xdo key_release -k 49;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 50;xdo key_release -k 50;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 51;xdo key_release -k 51;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 52;xdo key_release -k 52;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 53;xdo key_release -k 53;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 54;xdo key_release -k 54;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 55;xdo key_release -k 55;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 56;xdo key_release -k 56;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo key_press -k 57;xdo key_release -k 57;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;xdo button_press -k 1;xdo button_release -k 1;"
 
-template tipe*(letter: char): string =
-  ## Type a single letter using keyboard keys from char argument.
-  "xdo key_press -k " & $toKeycode(letter) & ";xdo key_release -k " & $toKeycode(letter) & ';'
-
-proc type_hostOS*(): string {.inline.} =
-  ## Type the hostOS using keyboard keys.
-  for letter in hostOS: result.add tipe(letter)
-
-proc type_hostCPU*(): string {.inline.} =
-  ## Type the hostCPU using keyboard keys.
-  for letter in hostCPU: result.add tipe(letter)
-
-proc type_NimVersion*(): string {.inline.} =
-  ## Type the current NimVersion using keyboard keys.
-  for letter in NimVersion: result.add tipe(letter)
-
-proc type_CompileTime*(): string {.inline.} =
-  ## Type the CompileDate & CompileTime using keyboard keys.
-  for letter in static(CompileDate & "T" & CompileTime): result.add tipe(letter)
-
-proc type_enter*(words: string): string {.inline.} =
-  ## Type the words then press Enter at the end using keyboard keys.
-  for letter in words: result.add tipe(letter)
-  result.add "xdo key_press -k 36;xdo key_release -k 36;"
-
 
 runnableExamples:
   ## XDo works on Linux OS.
   when defined(linux):
     ## Basic example of mouse and keyboard control from code.
     import strutils
-    echo version
     echo get_id()
     echo get_pid()
-    echo move_mouse_top_left()
     echo move_mouse((x: "+99", y: "+99"))
     echo move_mouse_left_100px(2)
     echo move_mouse_top_100px(2)
     echo mouse_move_alternating((x: 9, y: 5), 3)
-    echo type('a')
     # echo key_0()
     # echo key_1()
     # echo key_2()
