@@ -211,25 +211,6 @@ func toCmd*(actions: openArray[XDoActions]): string =
 func toCmd*(actions: openArray[char]): string =
   for action in actions: result.add toCmd(action)
 
-template xdo*(action: string, move: tuple[x: string, y: string] = (x: "0", y: "0"),
-          instance_name = "", class_name = "", wm_name = "", pid = 0,
-          wait4window = false, same_desktop = true, same_class = true, same_id = true): string =
-  ## XDo proc is a very low level wrapper for XDo for advanced developers, almost all arguments are supported.
-  assert action in ["close", "kill", "hide", "show", "raise", "lower", "below", "above", "move", "resize", "activate", "id",
-  "pid", "key_press", "key_release", "button_press", "button_release", "pointer_motion"] , "Invalid argument for Action"
-  (
-    "xdo " & action & " -" &
-    (if wait4window: "m" else: "") &
-    (if same_id: "" else: "r") &
-    (if same_desktop: 'd' else: 'D') &
-    (if same_class: 'c' else: 'C') &
-    (if instance_name != "": " -n " & $instance_name & " " else: "") &
-    (if class_name != "": " -N " & $class_name & " " else: "") &
-    (if wm_name != "": " -a " & $wm_name & " " else: "") &
-    (if pid != 0: " -p " & $pid & " " else: "") &
-    (if move != ("0", "0"): " -x " & $move.x & " -y " & $move.y & " " else: "") & ";"
-  )
-
 template getPid*(): string =
   ## Get Process ID.
   "xdo pid;"
